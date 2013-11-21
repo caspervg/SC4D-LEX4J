@@ -1,4 +1,4 @@
-SC4Devotion-LEXBrowser
+SC4Devotion-LEX4J
 ======================
 
-LEXBrowser using JavaFX and the new API
+Java wrapper library for the SC4Devotion LEX API.
