@@ -30,7 +30,12 @@ public class UserTest {
         }
         Auth auth = new Auth(prop.getProperty("auth.username"),prop.getProperty("auth.password"));
         UserRoute route = new UserRoute(auth);
-        User user = route.getUser();
+        User user = null;
+        try {
+            user = route.getUser();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         System.out.println(user.getFullname());
     }
 
@@ -45,7 +50,12 @@ public class UserTest {
         }
         Auth auth = new Auth(prop.getProperty("auth.username"), prop.getProperty("auth.password"));
         UserRoute route = new UserRoute(auth);
-        User user = route.getUser(1);
+        User user = null;
+        try {
+            user = route.getUser(1);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         System.out.println(user.getUsername());
     }
 
@@ -60,7 +70,12 @@ public class UserTest {
         }
         Auth auth = new Auth(prop.getProperty("auth.username"), prop.getProperty("auth.password"));
         UserRoute route = new UserRoute(auth);
-        List<User> user = route.getUserList(false,10,30);
+        List<User> user = null;
+        try {
+            user = route.getUserList(false,10,30);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         System.out.println(user.get(0).getFullname());
     }
 
@@ -76,7 +91,12 @@ public class UserTest {
         Auth auth = new Auth("lex4j_test", "test");
         UserRoute route = new UserRoute(auth);
         //route.postRegistration("lex4j_test", "test", "lolcode@lol", "LEX4J Testaccount");
-        User user = route.getUser();
+        User user = null;
+        try {
+            user = route.getUser();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         System.out.println(user.getFullname());
     }
 
@@ -91,7 +111,12 @@ public class UserTest {
         }
         Auth auth = new Auth(prop.getProperty("auth.username"), prop.getProperty("auth.password"));
         UserRoute route = new UserRoute(auth);
-        List<DownloadListItem> dlList = route.getDownloadList();
+        List<DownloadListItem> dlList = null;
+        try {
+            dlList = route.getDownloadList();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         System.out.println(dlList.get(0).getLot().getName());
     }
 
@@ -106,7 +131,12 @@ public class UserTest {
         }
         Auth auth = new Auth(prop.getProperty("auth.username"), prop.getProperty("auth.password"));
         UserRoute route = new UserRoute(auth);
-        List<DownloadHistoryItem> dlList = route.getDownloadHistory();
+        List<DownloadHistoryItem> dlList = null;
+        try {
+            dlList = route.getDownloadHistory();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         System.out.println(dlList.get(0).getLot().getName());
     }
 }

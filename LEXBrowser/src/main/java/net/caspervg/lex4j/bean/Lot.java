@@ -32,5 +32,66 @@ public class Lot {
     private String uploaded;
     @SerializedName("update_date")
     private String updated;
+    @SerializedName("dependencies")
+    private DependencyList dependencyList;
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public int getDownloads() {
+        return downloads;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public boolean isExclusive() {
+        return exclusive;
+    }
+
+    public String getBroadCategory() {
+        return broadCategory;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public HashMap<String, String> getImages() {
+        return images;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public boolean isCertified() {
+        return certified;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public String getUploaded() {
+        return uploaded;
+    }
+
+    public String getUpdated() {
+        return updated;
+    }
+
+    public DependencyList getDependencyList() {
+        return dependencyList;
+    }
 }

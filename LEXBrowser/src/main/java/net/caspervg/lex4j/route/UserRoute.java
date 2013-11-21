@@ -6,17 +6,14 @@ import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.DownloadHistoryItem;
 import net.caspervg.lex4j.bean.DownloadListItem;
 import net.caspervg.lex4j.bean.User;
-import net.caspervg.lex4j.error.LEX4JError;
 import org.restlet.data.Form;
 import org.restlet.data.Reference;
 import org.restlet.resource.ClientResource;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,37 +29,35 @@ public class UserRoute {
         this.auth = auth;
     }
 
-    public User getUser() {
+    public User getUser() throws Throwable {
         ClientResource resource = new ClientResource(Route.ME.url());
         resource.setChallengeResponse(this.auth.toChallenge());
 
         Gson gson = new Gson();
 
-        try {
+        if (resource.getResponse().getStatus().isSuccess()) {
             String result = resource.get().getText();
             return gson.fromJson(result, User.class);
-        } catch (IOException e) {
-            LEX4JError.log(Level.INFO, "Could not retrieve getUser()");
-            return null;
+        } else {
+            throw resource.getResponse().getStatus().getThrowable();
         }
     }
 
-    public User getUser(int id) {
+    public User getUser(int id) throws Throwable {
         ClientResource resource = new ClientResource(Route.USER.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
 
         Gson gson = new Gson();
 
-        try {
+        if (resource.getResponse().getStatus().isSuccess()) {
             String result = resource.get().getText();
             return gson.fromJson(result, User.class);
-        } catch (IOException e) {
-            LEX4JError.log(Level.INFO, "Could not retrieve getUser(id)");
-            return null;
+        } else {
+            throw resource.getResponse().getStatus().getThrowable();
         }
     }
 
-    public List<User> getUserList(boolean concise, int start, int amount) {
+    public List<User> getUserList(boolean concise, int start, int amount) throws Throwable {
         ClientResource resource = new ClientResource(Route.ALLUSER.url());
         Reference ref = resource.getReference();
 
@@ -78,17 +73,16 @@ public class UserRoute {
         Type listType = new TypeToken<List<User>>() {
         }.getType();
 
-        try {
+        if (resource.getResponse().getStatus().isSuccess()) {
             String result = resource.get().getText();
             return gson.fromJson(result, listType);
-        } catch (IOException e) {
-            LEX4JError.log(Level.INFO, "Could not retrieve getUserList()");
-            return null;
+        } else {
+            throw resource.getResponse().getStatus().getThrowable();
         }
     }
 
 
-    public List<DownloadListItem> getDownloadList() {
+    public List<DownloadListItem> getDownloadList() throws Throwable {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_LIST.url());
         resource.setChallengeResponse(this.auth.toChallenge());
 
@@ -96,16 +90,15 @@ public class UserRoute {
         Type listType = new TypeToken<List<DownloadListItem>>() {
         }.getType();
 
-        try {
+        if (resource.getResponse().getStatus().isSuccess()) {
             String result = resource.get().getText();
             return gson.fromJson(result, listType);
-        } catch (IOException e) {
-            LEX4JError.log(Level.INFO, "Could not retrieve getDownloadList()");
-            return null;
+        } else {
+            throw resource.getResponse().getStatus().getThrowable();
         }
     }
 
-    public List<DownloadHistoryItem> getDownloadHistory() {
+    public List<DownloadHistoryItem> getDownloadHistory() throws Throwable {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_HISTORY.url());
         resource.setChallengeResponse(this.auth.toChallenge());
 
@@ -113,16 +106,15 @@ public class UserRoute {
         Type listType = new TypeToken<List<DownloadHistoryItem>>() {
         }.getType();
 
-        try {
+        if (resource.getResponse().getStatus().isSuccess()) {
             String result = resource.get().getText();
             return gson.fromJson(result, listType);
-        } catch (IOException e) {
-            LEX4JError.log(Level.INFO, "Could not retrieve getDownloadHistory()");
-            return null;
+        } else {
+            throw resource.getResponse().getStatus().getThrowable();
         }
     }
 
-    public void postRegistration(String username, String password, String email, String fullname) {
+    public void postRegistration(String username, String password, String email, String fullname) throws Throwable {
         ClientResource resource = new ClientResource(Route.REGISTER.url());
 
         Form form = new Form();
@@ -133,9 +125,13 @@ public class UserRoute {
         form.add("fullname", fullname);
 
         resource.post(form);
+
+        if (!resource.getResponse().getStatus().isSuccess()) {
+            throw resource.getResponse().getStatus().getThrowable();
+        }
     }
 
-    public void getActivation(String key) {
+    public void getActivation(String key) throws Throwable {
         ClientResource resource = new ClientResource(Route.ACTIVATE.url());
         Reference ref = resource.getReference();
 
@@ -145,6 +141,10 @@ public class UserRoute {
         Route.addParameters(ref, param);
 
         resource.get();
+
+        if (!resource.getResponse().getStatus().isSuccess()) {
+            throw resource.getResponse().getStatus().getThrowable();
+        }
     }
 
 }

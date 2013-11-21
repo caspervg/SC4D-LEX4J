@@ -15,4 +15,24 @@ public class DependencyStatus {
     @SerializedName("superceded_by")
     private int supercededBy;
     private boolean locked;
+
+    public boolean isOk() {
+        return ok;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public boolean isSuperceded() {
+        return superceded;
+    }
+
+    public int getSupercededBy() {
+        return supercededBy;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
 }

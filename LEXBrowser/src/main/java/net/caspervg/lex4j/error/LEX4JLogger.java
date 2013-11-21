@@ -9,7 +9,7 @@ import java.util.logging.Logger;
  * Date: 21/11/13
  * Time: 13:31
  */
-public class LEX4JError {
+public class LEX4JLogger {
 
     public static void log(Level level, String message) {
         Logger.getLogger("LEX4J").log(level, message);

@@ -12,4 +12,16 @@ public class DependencyList {
     private String status;
     private int count;
     private List<DependencyItem> list;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public List<DependencyItem> getList() {
+        return list;
+    }
 }
