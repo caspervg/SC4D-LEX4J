@@ -72,14 +72,14 @@ public class LotRoute {
         }
     }
 
-    public boolean getLotDownload(int id, FileOutputStream zos) throws LEX4JStatusException {
+    public boolean getLotDownload(int id, FileOutputStream fos) throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_LOT.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
 
         Status status = resource.getResponse().getStatus();
         if (status.isSuccess()) {
             try {
-                resource.get(MediaType.APPLICATION_ZIP).write(zos);
+                resource.get(MediaType.APPLICATION_ZIP).write(fos);
                 return true;
             } catch (IOException ex) {
                 LEX4JLogger.log(Level.WARNING, "Could not write download to the FileOutputStream!");
@@ -89,4 +89,28 @@ public class LotRoute {
             throw new LEX4JStatusException("lot", "download", status.getCode());
         }
     }
+
+    public boolean getLotDownload(Lot lot, FileOutputStream fos) throws LEX4JStatusException {
+        return getLotDownload(lot.getId(), fos);
+    }
+
+    public boolean putLotDownloadList(int id) throws LEX4JStatusException {
+        ClientResource resource = new ClientResource(Route.DOWNLOADLIST_LOT.url(id));
+        resource.setChallengeResponse(this.auth.toChallenge());
+
+        resource.get();
+
+        Status status = resource.getResponse().getStatus();
+        if (status.isSuccess()) {
+            return true;
+        } else {
+            throw new LEX4JStatusException("lot", "download-list", status.getCode());
+        }
+    }
+
+    public boolean putLotDownloadList(Lot lot) throws LEX4JStatusException {
+        return putLotDownloadList(lot.getId());
+    }
+
+
 }

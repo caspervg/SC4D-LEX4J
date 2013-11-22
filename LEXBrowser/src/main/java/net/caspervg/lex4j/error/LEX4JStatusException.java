@@ -34,7 +34,7 @@ public class LEX4JStatusException extends Throwable {
     @Override
     public String getMessage() {
         String key = String.format("%s.%s.%s", endpoint, method, status);
-        return prop.getProperty(key);
+        return String.valueOf(status) + ": " + prop.getProperty(key);
     }
 
     public String getEndpoint() {
