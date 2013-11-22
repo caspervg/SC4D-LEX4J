@@ -36,6 +36,6 @@ public class Auth {
     }
 
     public ChallengeResponse toChallenge() {
-        return new ChallengeResponse(ChallengeScheme.HTTP_BASIC,this.username,this.password);
+        return new ChallengeResponse(ChallengeScheme.HTTP_BASIC, this.username, this.password);
     }
 }

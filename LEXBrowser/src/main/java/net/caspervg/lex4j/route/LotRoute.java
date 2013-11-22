@@ -3,9 +3,12 @@ package net.caspervg.lex4j.route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import net.caspervg.lex4j.auth.Auth;
+import net.caspervg.lex4j.bean.Comment;
+import net.caspervg.lex4j.bean.DependencyList;
 import net.caspervg.lex4j.bean.Lot;
 import net.caspervg.lex4j.error.LEX4JLogger;
 import net.caspervg.lex4j.error.LEX4JStatusException;
+import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Status;
 import org.restlet.resource.ClientResource;
@@ -68,7 +71,7 @@ public class LotRoute {
                 return null;
             }
         } else {
-            throw new LEX4JStatusException("lot", "lotlist", status.getCode());
+            throw new LEX4JStatusException("lot", "list", status.getCode());
         }
     }
 
@@ -112,5 +115,66 @@ public class LotRoute {
         return putLotDownloadList(lot.getId());
     }
 
+    public List<Comment> getComment(int id) throws LEX4JStatusException {
+        ClientResource resource = new ClientResource(Route.GET_COMMENT.url(id));
+        resource.setChallengeResponse(this.auth.toChallenge());
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Comment>>() {
+        }.getType();
+
+        Status status = resource.getResponse().getStatus();
+        if (status.isSuccess()) {
+            try {
+                String result = resource.get().getText();
+                return gson.fromJson(result, listType);
+            } catch (IOException ex) {
+                LEX4JLogger.log(Level.WARNING, "Could not retrieve lot comments correctly!");
+                return null;
+            }
+        } else {
+            throw new LEX4JStatusException("lot", "get-comment", status.getCode());
+        }
+    }
+
+    public boolean postComment(int id, int rating, String comment) throws LEX4JStatusException {
+        ClientResource resource = new ClientResource(Route.ADD_COMMENT.url(id));
+        resource.setChallengeResponse(this.auth.toChallenge());
+
+        Form form = new Form();
+        if (id > 0)
+            form.add("rating", String.valueOf(rating));
+        if (comment.length() > 0)
+            form.add("comment", comment);
+
+        resource.post(form);
+
+        Status status = resource.getResponse().getStatus();
+        if (status.isSuccess()) {
+            return true;
+        } else {
+            throw new LEX4JStatusException("lot","post-comment", status.getCode());
+        }
+    }
+
+    public DependencyList getDependency(int id) throws LEX4JStatusException {
+        ClientResource resource = new ClientResource(Route.DEPENDENCY.url(id));
+        resource.setChallengeResponse(this.auth.toChallenge());
+
+        Gson gson = new Gson();
+
+        Status status = resource.getResponse().getStatus();
+        if (status.isSuccess()) {
+            try {
+                String result = resource.get().getText();
+                return gson.fromJson(result, DependencyList.class);
+            } catch (IOException ex) {
+                LEX4JLogger.log(Level.WARNING, "Could not retrieve lot dependencies correctly!");
+                return null;
+            }
+        } else {
+            throw new LEX4JStatusException("lot", "dependency", status.getCode());
+        }
+    }
 
 }

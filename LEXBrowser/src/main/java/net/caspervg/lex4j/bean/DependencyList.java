@@ -11,7 +11,7 @@ import java.util.List;
 public class DependencyList {
     private String status;
     private int count;
-    private List<DependencyItem> list;
+    private List<Dependency> list;
 
     public String getStatus() {
         return status;
@@ -21,7 +21,7 @@ public class DependencyList {
         return count;
     }
 
-    public List<DependencyItem> getList() {
+    public List<Dependency> getList() {
         return list;
     }
 }

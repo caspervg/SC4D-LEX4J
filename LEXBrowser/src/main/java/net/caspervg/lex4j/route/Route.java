@@ -25,7 +25,10 @@ public enum Route {
     LOT("/lot/%s"),
     ALLLOT("/lot/all"),
     DOWNLOAD_LOT("/lot/%s/download"),
-    DOWNLOADLIST_LOT("/lot/%s/download-list");
+    DOWNLOADLIST_LOT("/lot/%s/download-list"),
+    ADD_COMMENT("/lot/%s/comment"),
+    GET_COMMENT("/lot/%s/comment"),
+    DEPENDENCY("/lot/%s/dependency");
 
     private static final String base = "http://sc4devotion.com/csxlex/api/";
     private static final String version = "v1";

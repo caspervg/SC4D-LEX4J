@@ -100,7 +100,7 @@ public class UserRoute {
                 return null;
             }
         } else {
-            throw new LEX4JStatusException("user", "get-list", status.getCode());
+            throw new LEX4JStatusException("user", "list", status.getCode());
         }
     }
 

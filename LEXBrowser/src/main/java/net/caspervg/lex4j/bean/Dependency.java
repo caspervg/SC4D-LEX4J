@@ -6,7 +6,7 @@ package net.caspervg.lex4j.bean;
  * Date: 21/11/13
  * Time: 16:02
  */
-public class DependencyItem {
+public class Dependency {
     private boolean internal;
     private String link;
     private String name;
