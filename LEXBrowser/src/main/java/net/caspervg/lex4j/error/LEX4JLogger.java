@@ -11,6 +11,11 @@ import java.util.logging.Logger;
  */
 public class LEX4JLogger {
 
+    /**
+     * Logging helper
+     * @param level Level of the log message
+     * @param message Log message
+     */
     public static void log(Level level, String message) {
         Logger.getLogger("LEX4J").log(level, message);
     }

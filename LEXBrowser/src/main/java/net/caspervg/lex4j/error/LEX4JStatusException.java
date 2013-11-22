@@ -37,14 +37,26 @@ public class LEX4JStatusException extends Throwable {
         return String.valueOf(status) + ": " + prop.getProperty(key);
     }
 
+    /**
+     * Get the Endpoint (for example: lot, user, search, ..)
+     * @return the Endpoint
+     */
     public String getEndpoint() {
         return endpoint;
     }
 
+    /**
+     * Get the Method (for example: download, download-list, ..)
+     * @return the Method
+     */
     public String getMethod() {
         return method;
     }
 
+    /**
+     * The Error Status returned by the LEX API Server
+     * @return the Error Status (for example: 404, 400, 429, ..)
+     */
     public int getStatus() {
         return status;
     }

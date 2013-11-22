@@ -28,12 +28,19 @@ public enum Route {
     DOWNLOADLIST_LOT("/lot/%s/download-list"),
     ADD_COMMENT("/lot/%s/comment"),
     GET_COMMENT("/lot/%s/comment"),
-    DEPENDENCY("/lot/%s/dependency");
+    DEPENDENCY("/lot/%s/dependency"),
+
+    // Search Routes
+    SEARCH("/search");
 
     private static final String base = "http://sc4devotion.com/csxlex/api/";
     private static final String version = "v1";
     private String url;
 
+    /**
+     * Creates a new Route
+     * @param url Endpoint for the route, uses %s in case an ID has to be filled in
+     */
     Route(String url) {
         this.url = url;
     }
@@ -43,15 +50,27 @@ public enum Route {
         return url();
     }
 
+    /**
+     * @return a full URL for this Route
+     */
     public String url() {
         return (this.base + this.version + this.url);
     }
 
+    /**
+     * @param id The ID to be filled into the Endpoint
+     * @return a full URL for this Route with given ID
+     */
     public String url(int id) {
         return String.format(url(), id);
     }
 
-    public static void addParameters(Reference ref, Map<String,Object> param) {
+    /**
+     * Static function to make adding GET Parameters easier for myself
+     * @param ref Reference (part of Restlet library)
+     * @param param Map of Strings (key) and Objects (values)
+     */
+    protected static void addParameters(Reference ref, Map<String,Object> param) {
         for (String key : param.keySet()) {
             Object value = param.get(key);
             if (value != null) {

@@ -29,13 +29,29 @@ public class LotRoute {
 
     private Auth auth;
 
+    /**
+     * Creates a new LotRoute, without Authorisation token. Some functions may not work!
+     */
+    public LotRoute() {
+        this(null);
+    }
+
+    /**
+     * Creates a new LotRoute, with Authorisation token.
+     * @param auth Authentication token
+     */
     public LotRoute(Auth auth) {
         this.auth = auth;
     }
 
+    /**
+     * Retrieve the lot/file
+     * @param id ID of the lot to be retrieved
+     * @throws LEX4JStatusException if the server returns an error
+     * @return Lot
+     */
     public Lot getLot(int id) throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.LOT.url(id));
-        resource.setChallengeResponse(this.auth.toChallenge());
 
         Gson gson = new Gson();
 
@@ -53,9 +69,13 @@ public class LotRoute {
         }
     }
 
+    /**
+     * Retrieve a list of lots/files
+     * @throws LEX4JStatusException if the server returns an error
+     * @return List of lots/files
+     */
     public List<Lot> getLotList() throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.ALLLOT.url());
-        resource.setChallengeResponse(this.auth.toChallenge());
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Lot>>() {
@@ -75,6 +95,14 @@ public class LotRoute {
         }
     }
 
+    /**
+     * Downloads a lot/file
+     * @param id ID of the lot/file
+     * @param fos FileOutputStream where the file should be downloaded
+     * @custom.require Authentication
+     * @return Download succeeded
+     * @throws LEX4JStatusException if the server returns an error
+     */
     public boolean getLotDownload(int id, FileOutputStream fos) throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_LOT.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
@@ -93,31 +121,32 @@ public class LotRoute {
         }
     }
 
-    public boolean getLotDownload(Lot lot, FileOutputStream fos) throws LEX4JStatusException {
-        return getLotDownload(lot.getId(), fos);
-    }
-
-    public boolean putLotDownloadList(int id) throws LEX4JStatusException {
+    /**
+     * Adds a file to the user's download list
+     * @param id : ID of the lot/file
+     * @custom.require Authentication
+     * @throws LEX4JStatusException if the server returns an error
+     */
+    public void putLotDownloadList(int id) throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.DOWNLOADLIST_LOT.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
 
         resource.get();
 
         Status status = resource.getResponse().getStatus();
-        if (status.isSuccess()) {
-            return true;
-        } else {
+        if (!status.isSuccess()) {
             throw new LEX4JStatusException("lot", "download-list", status.getCode());
         }
     }
 
-    public boolean putLotDownloadList(Lot lot) throws LEX4JStatusException {
-        return putLotDownloadList(lot.getId());
-    }
-
+    /**
+     * Retrieves the list of comments for a lot/file
+     * @param id ID of the lot/file
+     * @return List of comments
+     * @throws LEX4JStatusException if the server returns an error
+     */
     public List<Comment> getComment(int id) throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.GET_COMMENT.url(id));
-        resource.setChallengeResponse(this.auth.toChallenge());
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Comment>>() {
@@ -137,29 +166,40 @@ public class LotRoute {
         }
     }
 
-    public boolean postComment(int id, int rating, String comment) throws LEX4JStatusException {
+    /**
+     * Adds a comment and/or rating to a lot/file
+     * @param id ID of the lot/file
+     * @param rating rating for the lot/file (can be null)
+     * @param comment comment for the lot/file (can be null)
+     * @custom.require Authentication
+     * @throws LEX4JStatusException if the server returns an error
+     */
+    public void postComment(int id, int rating, String comment) throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.ADD_COMMENT.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
 
         Form form = new Form();
         if (id > 0)
             form.add("rating", String.valueOf(rating));
-        if (comment.length() > 0)
+        if (comment != null && comment.length() > 0)
             form.add("comment", comment);
 
         resource.post(form);
 
         Status status = resource.getResponse().getStatus();
-        if (status.isSuccess()) {
-            return true;
-        } else {
+        if (!status.isSuccess()) {
             throw new LEX4JStatusException("lot","post-comment", status.getCode());
         }
     }
 
+    /**
+     * Retrieves the dependency list for a lot/file
+     * @param id ID of the lot/file
+     * @throws LEX4JStatusException if the server returns an error
+     * @return DependencyList
+     */
     public DependencyList getDependency(int id) throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.DEPENDENCY.url(id));
-        resource.setChallengeResponse(this.auth.toChallenge());
 
         Gson gson = new Gson();
 

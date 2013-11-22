@@ -1,4 +1,4 @@
-package net.caspervg.lex4j.user;
+package net.caspervg.lex4j;
 
 import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.DownloadHistoryItem;

@@ -30,10 +30,27 @@ public class UserRoute {
 
     private Auth auth;
 
+    /**
+     * Create a new LotRoute, without Authorisation token. Some functions may not work.
+     */
+    public UserRoute() {
+        this(null);
+    }
+
+    /**
+     * Create a new LotRoute, with Authorisation token.
+     * @param auth Authentication token
+     */
     public UserRoute(Auth auth) {
         this.auth = auth;
     }
 
+    /**
+     * Retrieve the user that has been authenticated in the constructor
+     * @return User's profile
+     * @throws LEX4JStatusException if the server returns an error
+     * @custom.require Authentication
+     */
     public User getUser() throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.ME.url());
         resource.setChallengeResponse(this.auth.toChallenge());
@@ -54,6 +71,13 @@ public class UserRoute {
         }
     }
 
+    /**
+     * Retrieve the user with requested ID
+     * @param id ID of the User
+     * @return Requested User's profile
+     * @custom.require Authentication and Administrator
+     * @throws LEX4JStatusException if the server returns an error
+     */
     public User getUser(int id) throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.USER.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
@@ -74,11 +98,20 @@ public class UserRoute {
         }
     }
 
+    /**
+     * Retrieves a list of all Users
+     * @param concise true: only ID and Username (the rest will be null) - false: all data
+     * @param start start number of results
+     * @param amount number of results to return
+     * @return List of Users
+     * @custom.require Authentication and Administrator
+     * @throws LEX4JStatusException if the server returns an error
+     */
     public List<User> getUserList(boolean concise, int start, int amount) throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.ALLUSER.url());
         Reference ref = resource.getReference();
 
-        Map<String, Object> param = new HashMap<>();
+        Map<String, Object> param = new HashMap<String, Object>();
         param.put("concise", concise);
         param.put("start", start);
         param.put("amount", amount);
@@ -104,7 +137,12 @@ public class UserRoute {
         }
     }
 
-
+    /**
+     * Retrieves the download list for the User authenticated in the constructor
+     * @return List of DownloadListItems
+     * @custom.require Authentication
+     * @throws LEX4JStatusException if the server returns an error
+     */
     public List<DownloadListItem> getDownloadList() throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_LIST.url());
         resource.setChallengeResponse(this.auth.toChallenge());
@@ -127,6 +165,12 @@ public class UserRoute {
         }
     }
 
+    /**
+     * Retrieves the download history for the User authenticated in the constructor
+     * @return List of DownloadHistoryItems
+     * @custom.require Authentication
+     * @throws LEX4JStatusException if the server returns an error
+     */
     public List<DownloadHistoryItem> getDownloadHistory() throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_HISTORY.url());
         resource.setChallengeResponse(this.auth.toChallenge());
@@ -149,6 +193,14 @@ public class UserRoute {
         }
     }
 
+    /**
+     * Registers a new user for the SC4D LEX
+     * @param username the username
+     * @param password the password
+     * @param email the e-mail
+     * @param fullname the fullname (can be blank)
+     * @throws LEX4JStatusException if the server returns an error
+     */
     public void postRegistration(String username, String password, String email, String fullname) throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.REGISTER.url());
 
@@ -167,11 +219,16 @@ public class UserRoute {
         }
     }
 
+    /**
+     * Activates a user on the SC4D LEX
+     * @param key the activation key
+     * @throws LEX4JStatusException if the server returns an error
+     */
     public void getActivation(String key) throws LEX4JStatusException {
         ClientResource resource = new ClientResource(Route.ACTIVATE.url());
         Reference ref = resource.getReference();
 
-        Map<String, Object> param = new HashMap<>();
+        Map<String, Object> param = new HashMap<String, Object>();
         param.put("activation_key", key);
 
         Route.addParameters(ref, param);
