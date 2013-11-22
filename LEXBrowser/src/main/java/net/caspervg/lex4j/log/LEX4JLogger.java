@@ -1,4 +1,4 @@
-package net.caspervg.lex4j.error;
+package net.caspervg.lex4j.log;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

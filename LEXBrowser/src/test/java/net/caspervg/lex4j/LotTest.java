@@ -4,10 +4,11 @@ import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.Comment;
 import net.caspervg.lex4j.bean.DependencyList;
 import net.caspervg.lex4j.bean.Lot;
-import net.caspervg.lex4j.error.LEX4JStatusException;
 import net.caspervg.lex4j.route.LotRoute;
 import org.junit.Assert;
 import org.junit.Test;
+import org.restlet.data.Status;
+import org.restlet.resource.ResourceException;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,8 +38,13 @@ public class LotTest {
         try {
             lot = route.getLot(950);
             Assert.assertEquals(lot.getName(), "CAM Commercial Offices BSC");
-        } catch (Throwable throwable) {
-            System.out.println(throwable.getMessage());  //To change body of catch statement use File | Settings | File Templates.
+        } catch (ResourceException ex) {
+            Status stat = ex.getStatus();
+            System.out.println(stat.getDescription());
+            System.out.println(stat.getUri());
+            System.out.println(stat.getCode());
+            System.out.println(stat.getName());
+            System.out.println(stat.isClientError());
         }
     }
 
@@ -96,8 +102,8 @@ public class LotTest {
         try {
             DependencyList list = route.getDependency(950);
             Assert.assertEquals(76, list.getCount());
-        } catch (LEX4JStatusException ex) {
-            System.out.println(ex.getMessage());
+        } catch (ResourceException ex) {
+            System.out.println(ex.getStatus());
         }
     }
 
@@ -116,8 +122,8 @@ public class LotTest {
         try {
             List<Comment> list = route.getComment(950);
             Assert.assertEquals(34299, list.get(0).getId());
-        } catch (LEX4JStatusException ex) {
-            System.out.println(ex.getMessage());
+        } catch (ResourceException ex) {
+            System.out.println(ex.getStatus().getUri());
         }
     }
 

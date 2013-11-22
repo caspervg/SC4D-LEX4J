@@ -6,11 +6,10 @@ import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.Comment;
 import net.caspervg.lex4j.bean.DependencyList;
 import net.caspervg.lex4j.bean.Lot;
-import net.caspervg.lex4j.error.LEX4JLogger;
-import net.caspervg.lex4j.error.LEX4JStatusException;
+import net.caspervg.lex4j.log.LEX4JLogger;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
-import org.restlet.data.Status;
+import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 
 import java.io.FileOutputStream;
@@ -20,6 +19,10 @@ import java.util.List;
 import java.util.logging.Level;
 
 /**
+ * Routing for the Lot Endpoint.
+ * <b>Attention: </b> methods can throw ResourceExceptions.
+ * @see <a href="http://restlet.org/learn/javadocs/2.1/jse/api/org/restlet/data/Status.html">Restlet Status API Javadoc</a>
+ * @see <a href="https://github.com/caspervg/SC4Devotion-LEX-API/blob/master/Lot.md">LEX API Overview on Github</a>
  * Created with IntelliJ IDEA.
  * User: Casper
  * Date: 21/11/13
@@ -47,51 +50,39 @@ public class LotRoute {
     /**
      * Retrieve the lot/file
      * @param id ID of the lot to be retrieved
-     * @throws LEX4JStatusException if the server returns an error
      * @return Lot
      */
-    public Lot getLot(int id) throws LEX4JStatusException {
+    public Lot getLot(int id) {
         ClientResource resource = new ClientResource(Route.LOT.url(id));
 
         Gson gson = new Gson();
 
-        Status status = resource.getResponse().getStatus();
-        if (status.isSuccess()) {
-            try {
-                String result = resource.get().getText();
-                return gson.fromJson(result, Lot.class);
-            } catch (IOException e) {
-                LEX4JLogger.log(Level.WARNING, "Could not retrieve lot correctly!");
-                return null;
-            }
-        } else {
-            throw new LEX4JStatusException("lot", "get", status.getCode());
+        try {
+            Representation repr = resource.get();
+            return gson.fromJson(repr.getText(), Lot.class);
+        } catch (IOException e) {
+            LEX4JLogger.log(Level.WARNING, "Could not retrieve lot correctly!");
+            return null;
         }
     }
 
     /**
      * Retrieve a list of lots/files
-     * @throws LEX4JStatusException if the server returns an error
      * @return List of lots/files
      */
-    public List<Lot> getLotList() throws LEX4JStatusException {
+    public List<Lot> getLotList() {
         ClientResource resource = new ClientResource(Route.ALLLOT.url());
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Lot>>() {
         }.getType();
 
-        Status status = resource.getResponse().getStatus();
-        if (status.isSuccess()) {
-            try {
-                String result = resource.get().getText();
-                return gson.fromJson(result, listType);
-            } catch (IOException ex) {
-                LEX4JLogger.log(Level.WARNING, "Could not retrieve lot list correctly!");
-                return null;
-            }
-        } else {
-            throw new LEX4JStatusException("lot", "list", status.getCode());
+        try {
+            Representation repr = resource.get();
+            return gson.fromJson(repr.getText(), listType);
+        } catch (IOException ex) {
+            LEX4JLogger.log(Level.WARNING, "Could not retrieve lot list correctly!");
+            return null;
         }
     }
 
@@ -101,23 +92,18 @@ public class LotRoute {
      * @param fos FileOutputStream where the file should be downloaded
      * @custom.require Authentication
      * @return Download succeeded
-     * @throws LEX4JStatusException if the server returns an error
      */
-    public boolean getLotDownload(int id, FileOutputStream fos) throws LEX4JStatusException {
+    public boolean getLotDownload(int id, FileOutputStream fos) {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_LOT.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
 
-        Status status = resource.getResponse().getStatus();
-        if (status.isSuccess()) {
-            try {
-                resource.get(MediaType.APPLICATION_ZIP).write(fos);
-                return true;
-            } catch (IOException ex) {
-                LEX4JLogger.log(Level.WARNING, "Could not write download to the FileOutputStream!");
-                return false;
-            }
-        } else {
-            throw new LEX4JStatusException("lot", "download", status.getCode());
+        try {
+            Representation repr = resource.get(MediaType.APPLICATION_ZIP);
+            repr.write(fos);
+            return true;
+        } catch (IOException ex) {
+            LEX4JLogger.log(Level.WARNING, "Could not write download to the FileOutputStream!");
+            return false;
         }
     }
 
@@ -125,44 +111,32 @@ public class LotRoute {
      * Adds a file to the user's download list
      * @param id : ID of the lot/file
      * @custom.require Authentication
-     * @throws LEX4JStatusException if the server returns an error
      */
-    public void putLotDownloadList(int id) throws LEX4JStatusException {
+    public void putLotDownloadList(int id) {
         ClientResource resource = new ClientResource(Route.DOWNLOADLIST_LOT.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
 
         resource.get();
-
-        Status status = resource.getResponse().getStatus();
-        if (!status.isSuccess()) {
-            throw new LEX4JStatusException("lot", "download-list", status.getCode());
-        }
     }
 
     /**
      * Retrieves the list of comments for a lot/file
      * @param id ID of the lot/file
      * @return List of comments
-     * @throws LEX4JStatusException if the server returns an error
      */
-    public List<Comment> getComment(int id) throws LEX4JStatusException {
+    public List<Comment> getComment(int id) {
         ClientResource resource = new ClientResource(Route.GET_COMMENT.url(id));
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Comment>>() {
         }.getType();
 
-        Status status = resource.getResponse().getStatus();
-        if (status.isSuccess()) {
-            try {
-                String result = resource.get().getText();
-                return gson.fromJson(result, listType);
-            } catch (IOException ex) {
-                LEX4JLogger.log(Level.WARNING, "Could not retrieve lot comments correctly!");
-                return null;
-            }
-        } else {
-            throw new LEX4JStatusException("lot", "get-comment", status.getCode());
+        try {
+            String result = resource.get().getText();
+            return gson.fromJson(result, listType);
+        } catch (IOException ex) {
+            LEX4JLogger.log(Level.WARNING, "Could not retrieve lot comments correctly!");
+            return null;
         }
     }
 
@@ -172,9 +146,8 @@ public class LotRoute {
      * @param rating rating for the lot/file (can be null)
      * @param comment comment for the lot/file (can be null)
      * @custom.require Authentication
-     * @throws LEX4JStatusException if the server returns an error
      */
-    public void postComment(int id, int rating, String comment) throws LEX4JStatusException {
+    public void postComment(int id, int rating, String comment) {
         ClientResource resource = new ClientResource(Route.ADD_COMMENT.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
 
@@ -185,35 +158,24 @@ public class LotRoute {
             form.add("comment", comment);
 
         resource.post(form);
-
-        Status status = resource.getResponse().getStatus();
-        if (!status.isSuccess()) {
-            throw new LEX4JStatusException("lot","post-comment", status.getCode());
-        }
     }
 
     /**
      * Retrieves the dependency list for a lot/file
      * @param id ID of the lot/file
-     * @throws LEX4JStatusException if the server returns an error
      * @return DependencyList
      */
-    public DependencyList getDependency(int id) throws LEX4JStatusException {
+    public DependencyList getDependency(int id) {
         ClientResource resource = new ClientResource(Route.DEPENDENCY.url(id));
 
         Gson gson = new Gson();
 
-        Status status = resource.getResponse().getStatus();
-        if (status.isSuccess()) {
-            try {
-                String result = resource.get().getText();
-                return gson.fromJson(result, DependencyList.class);
-            } catch (IOException ex) {
-                LEX4JLogger.log(Level.WARNING, "Could not retrieve lot dependencies correctly!");
-                return null;
-            }
-        } else {
-            throw new LEX4JStatusException("lot", "dependency", status.getCode());
+        try {
+            Representation repr = resource.get();
+            return gson.fromJson(repr.getText(), DependencyList.class);
+        } catch (IOException ex) {
+            LEX4JLogger.log(Level.WARNING, "Could not retrieve lot dependencies correctly!");
+            return null;
         }
     }
 

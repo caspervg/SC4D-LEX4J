@@ -6,11 +6,10 @@ import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.DownloadHistoryItem;
 import net.caspervg.lex4j.bean.DownloadListItem;
 import net.caspervg.lex4j.bean.User;
-import net.caspervg.lex4j.error.LEX4JLogger;
-import net.caspervg.lex4j.error.LEX4JStatusException;
+import net.caspervg.lex4j.log.LEX4JLogger;
 import org.restlet.data.Form;
 import org.restlet.data.Reference;
-import org.restlet.data.Status;
+import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 
 import java.io.IOException;
@@ -21,6 +20,9 @@ import java.util.Map;
 import java.util.logging.Level;
 
 /**
+ * <b>Attention: </b> methods can throw ResourceExceptions.
+ * @see <a href="http://restlet.org/learn/javadocs/2.1/jse/api/org/restlet/data/Status.html">Restlet Status API Javadoc</a>
+ * @see <a href="https://github.com/caspervg/SC4Devotion-LEX-API/blob/master/User.md">LEX API Overview on Github</a>
  * Created with IntelliJ IDEA.
  * User: Casper
  * Date: 21/11/13
@@ -48,26 +50,20 @@ public class UserRoute {
     /**
      * Retrieve the user that has been authenticated in the constructor
      * @return User's profile
-     * @throws LEX4JStatusException if the server returns an error
      * @custom.require Authentication
      */
-    public User getUser() throws LEX4JStatusException {
+    public User getUser() {
         ClientResource resource = new ClientResource(Route.ME.url());
         resource.setChallengeResponse(this.auth.toChallenge());
 
         Gson gson = new Gson();
 
-        Status status = resource.getResponse().getStatus();
-        if (status.isSuccess()) {
-            try {
-                String result = resource.get().getText();
-                return gson.fromJson(result, User.class);
-            } catch (IOException ex) {
-                LEX4JLogger.log(Level.WARNING, "Could not retrieve user (me) correctly!");
-                return null;
-            }
-        } else {
-            throw new LEX4JStatusException("user", "get-me", status.getCode());
+        try {
+            Representation repr = resource.get();
+            return gson.fromJson(repr.getText(), User.class);
+        } catch (IOException ex) {
+            LEX4JLogger.log(Level.WARNING, "Could not retrieve user (me) correctly!");
+            return null;
         }
     }
 
@@ -76,25 +72,19 @@ public class UserRoute {
      * @param id ID of the User
      * @return Requested User's profile
      * @custom.require Authentication and Administrator
-     * @throws LEX4JStatusException if the server returns an error
      */
-    public User getUser(int id) throws LEX4JStatusException {
+    public User getUser(int id) {
         ClientResource resource = new ClientResource(Route.USER.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
 
         Gson gson = new Gson();
 
-        Status status = resource.getResponse().getStatus();
-        if (status.isSuccess()) {
-            try {
-                String result = resource.get().getText();
-                return gson.fromJson(result, User.class);
-            } catch (IOException ex) {
-                LEX4JLogger.log(Level.WARNING, "Could not retrieve user correctly!");
-                return null;
-            }
-        } else {
-            throw new LEX4JStatusException("user", "get", status.getCode());
+        try {
+            Representation repr = resource.get();
+            return gson.fromJson(repr.getText(), User.class);
+        } catch (IOException ex) {
+            LEX4JLogger.log(Level.WARNING, "Could not retrieve user correctly!");
+            return null;
         }
     }
 
@@ -105,9 +95,8 @@ public class UserRoute {
      * @param amount number of results to return
      * @return List of Users
      * @custom.require Authentication and Administrator
-     * @throws LEX4JStatusException if the server returns an error
      */
-    public List<User> getUserList(boolean concise, int start, int amount) throws LEX4JStatusException {
+    public List<User> getUserList(boolean concise, int start, int amount) {
         ClientResource resource = new ClientResource(Route.ALLUSER.url());
         Reference ref = resource.getReference();
 
@@ -123,17 +112,12 @@ public class UserRoute {
         Type listType = new TypeToken<List<User>>() {
         }.getType();
 
-        Status status = resource.getResponse().getStatus();
-        if (status.isSuccess()) {
-            try {
-                String result = resource.get().getText();
-                return gson.fromJson(result, listType);
-            } catch (IOException ex) {
-                LEX4JLogger.log(Level.WARNING, "Could not retrieve user list correctly!");
-                return null;
-            }
-        } else {
-            throw new LEX4JStatusException("user", "list", status.getCode());
+        try {
+            Representation repr = resource.get();
+            return gson.fromJson(repr.getText(), listType);
+        } catch (IOException ex) {
+            LEX4JLogger.log(Level.WARNING, "Could not retrieve user list correctly!");
+            return null;
         }
     }
 
@@ -141,9 +125,8 @@ public class UserRoute {
      * Retrieves the download list for the User authenticated in the constructor
      * @return List of DownloadListItems
      * @custom.require Authentication
-     * @throws LEX4JStatusException if the server returns an error
      */
-    public List<DownloadListItem> getDownloadList() throws LEX4JStatusException {
+    public List<DownloadListItem> getDownloadList() {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_LIST.url());
         resource.setChallengeResponse(this.auth.toChallenge());
 
@@ -151,17 +134,12 @@ public class UserRoute {
         Type listType = new TypeToken<List<DownloadListItem>>() {
         }.getType();
 
-        Status status = resource.getResponse().getStatus();
-        if (status.isSuccess()) {
-            try {
-                String result = resource.get().getText();
-                return gson.fromJson(result, listType);
-            } catch (IOException ex) {
-                LEX4JLogger.log(Level.WARNING, "Could not retrieve download list correctly!");
-                return null;
-            }
-        } else {
-            throw new LEX4JStatusException("user", "download-list", status.getCode());
+        try {
+            Representation repr = resource.get();
+            return gson.fromJson(repr.getText(), listType);
+        } catch (IOException ex) {
+            LEX4JLogger.log(Level.WARNING, "Could not retrieve download list correctly!");
+            return null;
         }
     }
 
@@ -169,9 +147,8 @@ public class UserRoute {
      * Retrieves the download history for the User authenticated in the constructor
      * @return List of DownloadHistoryItems
      * @custom.require Authentication
-     * @throws LEX4JStatusException if the server returns an error
      */
-    public List<DownloadHistoryItem> getDownloadHistory() throws LEX4JStatusException {
+    public List<DownloadHistoryItem> getDownloadHistory() {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_HISTORY.url());
         resource.setChallengeResponse(this.auth.toChallenge());
 
@@ -179,17 +156,12 @@ public class UserRoute {
         Type listType = new TypeToken<List<DownloadHistoryItem>>() {
         }.getType();
 
-        Status status = resource.getResponse().getStatus();
-        if (status.isSuccess()) {
-            try {
-                String result = resource.get().getText();
-                return gson.fromJson(result, listType);
-            } catch (IOException e) {
-                LEX4JLogger.log(Level.WARNING, "Could not retrieve download history correctly!");
-                return null;
-            }
-        } else {
-            throw new LEX4JStatusException("user", "download-history", status.getCode());
+        try {
+            String result = resource.get().getText();
+            return gson.fromJson(result, listType);
+        } catch (IOException e) {
+            LEX4JLogger.log(Level.WARNING, "Could not retrieve download history correctly!");
+            return null;
         }
     }
 
@@ -199,9 +171,8 @@ public class UserRoute {
      * @param password the password
      * @param email the e-mail
      * @param fullname the fullname (can be blank)
-     * @throws LEX4JStatusException if the server returns an error
      */
-    public void postRegistration(String username, String password, String email, String fullname) throws LEX4JStatusException {
+    public void postRegistration(String username, String password, String email, String fullname) {
         ClientResource resource = new ClientResource(Route.REGISTER.url());
 
         Form form = new Form();
@@ -212,19 +183,13 @@ public class UserRoute {
         form.add("fullname", fullname);
 
         resource.post(form);
-
-        Status status = resource.getResponse().getStatus();
-        if (!status.isSuccess()) {
-            throw new LEX4JStatusException("user","register",status.getCode());
-        }
     }
 
     /**
      * Activates a user on the SC4D LEX
      * @param key the activation key
-     * @throws LEX4JStatusException if the server returns an error
      */
-    public void getActivation(String key) throws LEX4JStatusException {
+    public void getActivation(String key) {
         ClientResource resource = new ClientResource(Route.ACTIVATE.url());
         Reference ref = resource.getReference();
 
@@ -234,11 +199,6 @@ public class UserRoute {
         Route.addParameters(ref, param);
 
         resource.get();
-
-        Status status = resource.getResponse().getStatus();
-        if (!status.isSuccess()) {
-            throw new LEX4JStatusException("user","activate",status.getCode());
-        }
     }
 
 }
