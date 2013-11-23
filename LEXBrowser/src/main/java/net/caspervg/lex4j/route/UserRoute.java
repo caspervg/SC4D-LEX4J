@@ -97,7 +97,7 @@ public class UserRoute {
      * @custom.require Authentication and Administrator
      */
     public List<User> getUserList(boolean concise, int start, int amount) {
-        ClientResource resource = new ClientResource(Route.ALLUSER.url());
+        ClientResource resource = new ClientResource(Route.ALL_USER.url());
         Reference ref = resource.getReference();
 
         Map<String, Object> param = new HashMap<String, Object>();

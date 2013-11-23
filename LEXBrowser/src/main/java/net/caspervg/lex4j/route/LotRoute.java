@@ -7,13 +7,13 @@ import net.caspervg.lex4j.bean.Comment;
 import net.caspervg.lex4j.bean.DependencyList;
 import net.caspervg.lex4j.bean.Lot;
 import net.caspervg.lex4j.log.LEX4JLogger;
+import org.restlet.data.Disposition;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.logging.Level;
@@ -71,7 +71,7 @@ public class LotRoute {
      * @return List of lots/files
      */
     public List<Lot> getLotList() {
-        ClientResource resource = new ClientResource(Route.ALLLOT.url());
+        ClientResource resource = new ClientResource(Route.ALL_LOT.url());
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Lot>>() {
@@ -89,17 +89,22 @@ public class LotRoute {
     /**
      * Downloads a lot/file
      * @param id ID of the lot/file
-     * @param fos FileOutputStream where the file should be downloaded
+     * @param directory Directory where the file should be downloaded
      * @custom.require Authentication
      * @return Download succeeded
      */
-    public boolean getLotDownload(int id, FileOutputStream fos) {
+    public boolean getLotDownload(int id, File directory) {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_LOT.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
 
         try {
             Representation repr = resource.get(MediaType.APPLICATION_ZIP);
+            Disposition disposition = repr.getDisposition();
+
+            File file = new File(directory, disposition.getFilename());
+            FileOutputStream fos = new FileOutputStream(file);
             repr.write(fos);
+
             return true;
         } catch (IOException ex) {
             LEX4JLogger.log(Level.WARNING, "Could not write download to the FileOutputStream!");

@@ -6,12 +6,12 @@ import net.caspervg.lex4j.bean.DependencyList;
 import net.caspervg.lex4j.bean.Lot;
 import net.caspervg.lex4j.route.LotRoute;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.Properties;
 
@@ -23,20 +23,25 @@ import java.util.Properties;
  */
 public class LotTest {
 
+    private static Properties prop = new Properties();
+
+    @BeforeClass
+    public static void setUpClass() {
+        try {
+            /*
+             * If you want to run these tests, place a auth.properties file with your username and password in a directory.
+             */
+            prop.load(new FileInputStream(new File("E:\\auth.properties")));
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
     @Test
     public void lotTest() {
-        Properties prop = new Properties();
-
+        LotRoute route = new LotRoute();
         try {
-            prop.load(this.getClass().getResourceAsStream("/auth.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Auth auth = new Auth(prop.getProperty("auth.username"),prop.getProperty("auth.password"));
-        LotRoute route = new LotRoute(auth);
-        Lot lot = null;
-        try {
-            lot = route.getLot(950);
+            Lot lot = route.getLot(950);
             Assert.assertEquals(lot.getName(), "CAM Commercial Offices BSC");
         } catch (ResourceException ex) {
             Status stat = ex.getStatus();
@@ -50,55 +55,30 @@ public class LotTest {
 
     @Test
     public void lotAllTest() {
-        Properties prop = new Properties();
+        LotRoute route = new LotRoute();
+        List<Lot> lots = route.getLotList();
 
-        try {
-            prop.load(this.getClass().getResourceAsStream("/auth.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Auth auth = new Auth(prop.getProperty("auth.username"), prop.getProperty("auth.password"));
-        LotRoute route = new LotRoute(auth);
-        List<Lot> lots = null;
-        try {
-            lots = route.getLotList();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-        Assert.assertEquals(lots.get(0).getName(), "CSX Farm SF - Veronique");
+        Assert.assertEquals(2, lots.get(0).getId());
+        Assert.assertEquals("CSX Farm SF - Veronique", lots.get(0).getName());
+        Assert.assertNull(lots.get(0).getLink());
     }
 
     @Test
     public void lotDownloadTest() {
-        Properties prop = new Properties();
+        Auth auth = new Auth(prop.getProperty("username"), prop.getProperty("password"));
+        LotRoute route = new LotRoute(auth);
 
         try {
-            prop.load(this.getClass().getResourceAsStream("/auth.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Auth auth = new Auth(prop.getProperty("auth.username"), prop.getProperty("auth.password"));
-        LotRoute route = new LotRoute(auth);
-        try {
-            route.getLotDownload(50, new FileOutputStream("C:\\Binary\\download4.zip"));
-        } catch (Throwable t) {
-            System.out.println(t.getMessage());
+            File f = new File("E:\\Binary");
+            route.getLotDownload(50, f);
+        } catch (ResourceException ex) {
+            System.out.println(ex.getStatus());
         }
     }
 
     @Test
     public void lotDependencyTest() {
-        Properties prop = new Properties();
-
-        try {
-            prop.load(this.getClass().getResourceAsStream("/auth.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Auth auth = new Auth(prop.getProperty("auth.username"), prop.getProperty("auth.password"));
-        LotRoute route = new LotRoute(auth);
+        LotRoute route = new LotRoute();
         try {
             DependencyList list = route.getDependency(950);
             Assert.assertEquals(76, list.getCount());
@@ -109,21 +89,12 @@ public class LotTest {
 
     @Test
     public void lotCommentTest() {
-        Properties prop = new Properties();
-
-        try {
-            prop.load(this.getClass().getResourceAsStream("/auth.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Auth auth = new Auth(prop.getProperty("auth.username"), prop.getProperty("auth.password"));
-        LotRoute route = new LotRoute(auth);
+        LotRoute route = new LotRoute();
         try {
             List<Comment> list = route.getComment(950);
             Assert.assertEquals(34299, list.get(0).getId());
         } catch (ResourceException ex) {
-            System.out.println(ex.getStatus().getUri());
+            System.out.println(ex.getStatus());
         }
     }
 

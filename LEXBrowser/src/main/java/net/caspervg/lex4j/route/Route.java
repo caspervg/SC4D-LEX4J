@@ -15,7 +15,7 @@ public enum Route {
     // User Routes
     ME("/user"),
     USER("/user/%s"),
-    ALLUSER("/user/all"),
+    ALL_USER("/user/all"),
     DOWNLOAD_LIST("/user/download-list"),
     DOWNLOAD_HISTORY("/user/download-history"),
     REGISTER("/user/register"),
@@ -23,7 +23,7 @@ public enum Route {
 
     // Lot Routes
     LOT("/lot/%s"),
-    ALLLOT("/lot/all"),
+    ALL_LOT("/lot/all"),
     DOWNLOAD_LOT("/lot/%s/download"),
     DOWNLOADLIST_LOT("/lot/%s/download-list"),
     ADD_COMMENT("/lot/%s/comment"),
@@ -31,7 +31,16 @@ public enum Route {
     DEPENDENCY("/lot/%s/dependency"),
 
     // Search Routes
-    SEARCH("/search");
+    SEARCH("/search"),
+
+    // Category Routes
+    BROAD_CATEGORY("/category/broad-category"),
+    LEX_CATEGORY("/category/lex-category"),
+    LEX_TYPE("/category/lex-type"),
+    LOTGROUP("/category/group"),
+    AUTHORS("/category/author"),
+    ALL_CATEGORY("/category/all");
+
 
     private static final String base = "http://sc4devotion.com/csxlex/api/";
     private static final String version = "v1";

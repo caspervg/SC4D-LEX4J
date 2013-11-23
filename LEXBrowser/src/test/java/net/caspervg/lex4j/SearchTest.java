@@ -5,6 +5,7 @@ import net.caspervg.lex4j.bean.Lot;
 import net.caspervg.lex4j.route.Filter;
 import net.caspervg.lex4j.route.SearchRoute;
 import org.junit.Test;
+import org.restlet.resource.ResourceException;
 
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class SearchTest {
             route.addFilter(Filter.CREATOR, 1);
             List<Lot> lots = route.doSearch();
             Assert.assertEquals(1007, lots.get(0).getId());
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
+        } catch (ResourceException ex) {
+            System.out.println(ex.getStatus());
         }
     }
 

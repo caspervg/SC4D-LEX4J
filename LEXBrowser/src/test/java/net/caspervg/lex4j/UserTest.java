@@ -5,8 +5,13 @@ import net.caspervg.lex4j.bean.DownloadHistoryItem;
 import net.caspervg.lex4j.bean.DownloadListItem;
 import net.caspervg.lex4j.bean.User;
 import net.caspervg.lex4j.route.UserRoute;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.Assert;
+import org.restlet.resource.ResourceException;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
@@ -19,124 +24,83 @@ import java.util.Properties;
  */
 public class UserTest {
 
+    private static Properties prop = new Properties();
+
+    @BeforeClass
+    public static void setUpClass() {
+        try {
+            /*
+             * If you want to run these tests, place a auth.properties file with your username and password in a directory.
+             */
+            prop.load(new FileInputStream(new File("E:\\auth.properties")));
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
     @Test
     public void userTest() {
-        Properties prop = new Properties();
-
-        try {
-            prop.load(this.getClass().getResourceAsStream("/auth.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Auth auth = new Auth(prop.getProperty("auth.username"),prop.getProperty("auth.password"));
+        Auth auth = new Auth(prop.getProperty("username"),prop.getProperty("password"));
         UserRoute route = new UserRoute(auth);
-        User user = null;
         try {
-            user = route.getUser();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            User user = route.getUser();
+            Assert.assertEquals(user.getUsername(), "caspervg");
+        } catch (ResourceException ex) {
+            System.out.println(ex.getStatus());
         }
-        System.out.println(user.getFullname());
     }
 
+    /**
+     * This test will only work if you have Administrator access to the LEX
+     */
     @Test
     public void userOtherTest() {
-        Properties prop = new Properties();
-
-        try {
-            prop.load(this.getClass().getResourceAsStream("/auth.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Auth auth = new Auth(prop.getProperty("auth.username"), prop.getProperty("auth.password"));
+        Auth auth = new Auth(prop.getProperty("username"), prop.getProperty("password"));
         UserRoute route = new UserRoute(auth);
-        User user = null;
         try {
-            user = route.getUser(1);
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            User user = route.getUser(1);
+            Assert.assertEquals(user.getUsername(), "ADMIN");
+        } catch (ResourceException ex) {
+            System.out.println(ex.getStatus());
         }
-        System.out.println(user.getUsername());
     }
 
+    /**
+     * This test will only work if you have Administrator access to the LEX
+     */
     @Test
     public void userAllTest() {
-        Properties prop = new Properties();
-
-        try {
-            prop.load(this.getClass().getResourceAsStream("/auth.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Auth auth = new Auth(prop.getProperty("auth.username"), prop.getProperty("auth.password"));
+        Auth auth = new Auth(prop.getProperty("username"), prop.getProperty("password"));
         UserRoute route = new UserRoute(auth);
-        List<User> user = null;
         try {
-            user = route.getUserList(false,10,30);
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            List<User> users = route.getUserList(false,10,30);
+            Assert.assertEquals(users.get(0).getUsername(), "barbyw");
+        } catch (ResourceException ex) {
+            System.out.println(ex.getStatus());
         }
-        System.out.println(user.get(0).getFullname());
-    }
-
-    //@Test
-    public void userRegisterTest() {
-        Properties prop = new Properties();
-
-        try {
-            prop.load(this.getClass().getResourceAsStream("/auth.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Auth auth = new Auth("lex4j_test", "test");
-        UserRoute route = new UserRoute(auth);
-        //route.postRegistration("lex4j_test", "test", "lolcode@lol", "LEX4J Testaccount");
-        User user = null;
-        try {
-            user = route.getUser();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        System.out.println(user.getFullname());
     }
 
     @Test
     public void downloadListTest() {
-        Properties prop = new Properties();
-
-        try {
-            prop.load(this.getClass().getResourceAsStream("/auth.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Auth auth = new Auth(prop.getProperty("auth.username"), prop.getProperty("auth.password"));
+        Auth auth = new Auth(prop.getProperty("username"), prop.getProperty("password"));
         UserRoute route = new UserRoute(auth);
-        List<DownloadListItem> dlList = null;
         try {
-            dlList = route.getDownloadList();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            List<DownloadListItem> dlList = route.getDownloadList();
+            Assert.assertEquals(dlList.get(0).getRecord().getId(), 13099621);
+        } catch (ResourceException ex) {
+            System.out.println(ex.getStatus());
         }
-        System.out.println(dlList.get(0).getLot().getName());
     }
 
     @Test
     public void downloadHistoryTest() {
-        Properties prop = new Properties();
-
-        try {
-            prop.load(this.getClass().getResourceAsStream("/auth.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Auth auth = new Auth(prop.getProperty("auth.username"), prop.getProperty("auth.password"));
+        Auth auth = new Auth(prop.getProperty("username"), prop.getProperty("password"));
         UserRoute route = new UserRoute(auth);
-        List<DownloadHistoryItem> dlList = null;
         try {
-            dlList = route.getDownloadHistory();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            List<DownloadHistoryItem> dlList = route.getDownloadHistory();
+            Assert.assertEquals(dlList.get(0).getRecord().getId(), 12850364);
+        } catch (ResourceException ex) {
+            System.out.println(ex.getStatus());
         }
-        System.out.println(dlList.get(0).getLot().getName());
     }
 }

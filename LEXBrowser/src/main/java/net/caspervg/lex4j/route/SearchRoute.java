@@ -27,7 +27,6 @@ import java.util.logging.Level;
  */
 public class SearchRoute {
 
-    private Auth auth;
     private Map<String, Object> parameters;
 
     /**
