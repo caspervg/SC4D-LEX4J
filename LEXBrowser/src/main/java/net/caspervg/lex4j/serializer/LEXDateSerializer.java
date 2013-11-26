@@ -10,7 +10,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,12 +26,9 @@ public class LEXDateSerializer implements JsonDeserializer<Date> {
 
     @Override
     public Date deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext context) throws JsonParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat();
-        formatter.setTimeZone(TimeZone.getTimeZone("Etc/GMT+6"));
         for (String format : DATE_FORMATS) {
             try {
-                formatter.applyPattern(format);
-                return formatter.parse(jsonElement.getAsString());
+                return new SimpleDateFormat(format).parse(jsonElement.getAsString());
             } catch (ParseException ex) {
 
             }
