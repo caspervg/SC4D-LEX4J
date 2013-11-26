@@ -32,7 +32,7 @@ public class UserTest {
             /*
              * If you want to run these tests, place a auth.properties file with your username and password in a directory.
              */
-            prop.load(new FileInputStream(new File("E:\\auth.properties")));
+            prop.load(new FileInputStream(new File("C:\\Users\\Casper\\IdeaProjects\\SC4Devotion-LEXBrowser\\LEXBrowser\\src\\test\\java\\net\\caspervg\\lex4j\\auth.properties")));
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -44,6 +44,8 @@ public class UserTest {
         UserRoute route = new UserRoute(auth);
         try {
             User user = route.getUser();
+            System.out.println(user.getRegistered());
+            System.out.println(user.getLastLogin());
             Assert.assertEquals(user.getUsername(), "caspervg");
         } catch (ResourceException ex) {
             System.out.println(ex.getStatus());

@@ -2,6 +2,8 @@ package net.caspervg.lex4j.bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Casper
@@ -12,10 +14,10 @@ public class User {
     private int id;
     private String fullname;
     private String username;
-    private String registered;
+    private Date registered;
 
     @SerializedName("last_login")
-    private String lastLogin;
+    private Date lastLogin;
 
     @SerializedName("user_level")
     private int userLevel;
@@ -55,11 +57,11 @@ public class User {
         return username;
     }
 
-    public String getRegistered() {
+    public Date getRegistered() {
         return registered;
     }
 
-    public String getLastLogin() {
+    public Date getLastLogin() {
         return lastLogin;
     }
 
