@@ -1,12 +1,14 @@
 package net.caspervg.lex4j.route;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.DownloadHistoryItem;
 import net.caspervg.lex4j.bean.DownloadListItem;
 import net.caspervg.lex4j.bean.User;
 import net.caspervg.lex4j.log.LEX4JLogger;
+import net.caspervg.lex4j.serializer.LEXDateSerializer;
 import org.restlet.data.Form;
 import org.restlet.data.Reference;
 import org.restlet.representation.Representation;
@@ -14,6 +16,7 @@ import org.restlet.resource.ClientResource;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +59,7 @@ public class UserRoute {
         ClientResource resource = new ClientResource(Route.ME.url());
         resource.setChallengeResponse(this.auth.toChallenge());
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
 
         try {
             Representation repr = resource.get();
@@ -77,7 +80,7 @@ public class UserRoute {
         ClientResource resource = new ClientResource(Route.USER.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
 
         try {
             Representation repr = resource.get();
@@ -108,7 +111,7 @@ public class UserRoute {
         Route.addParameters(ref, param);
 
         resource.setChallengeResponse(this.auth.toChallenge());
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
         Type listType = new TypeToken<List<User>>() {
         }.getType();
 
@@ -130,7 +133,7 @@ public class UserRoute {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_LIST.url());
         resource.setChallengeResponse(this.auth.toChallenge());
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
         Type listType = new TypeToken<List<DownloadListItem>>() {
         }.getType();
 
@@ -152,7 +155,7 @@ public class UserRoute {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_HISTORY.url());
         resource.setChallengeResponse(this.auth.toChallenge());
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
         Type listType = new TypeToken<List<DownloadHistoryItem>>() {
         }.getType();
 

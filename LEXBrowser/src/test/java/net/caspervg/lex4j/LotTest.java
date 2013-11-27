@@ -31,7 +31,7 @@ public class LotTest {
             /*
              * If you want to run these tests, place a auth.properties file with your username and password in a directory.
              */
-            prop.load(new FileInputStream(new File("E:\\auth.properties")));
+            prop.load(new FileInputStream(new File("C:\\Users\\Casper\\IdeaProjects\\SC4Devotion-LEXBrowser\\LEXBrowser\\src\\test\\java\\net\\caspervg\\lex4j\\auth.properties")));
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -91,8 +91,9 @@ public class LotTest {
     public void lotCommentTest() {
         LotRoute route = new LotRoute();
         try {
-            List<Comment> list = route.getComment(950);
-            Assert.assertEquals(34299, list.get(0).getId());
+            List<Comment> list = route.getComment(900);
+            System.out.println(list.get(0).getDate());
+            //Assert.assertEquals(34299, list.get(0).getId());
         } catch (ResourceException ex) {
             System.out.println(ex.getStatus());
         }

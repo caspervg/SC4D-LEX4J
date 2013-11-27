@@ -2,6 +2,8 @@ package net.caspervg.lex4j.bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Casper
@@ -24,7 +26,7 @@ public class DownloadHistoryItem {
     public class DownloadHistoryItemRecord {
         private int id;
         @SerializedName("last_downloaded")
-        private String lastDownloaded;
+        private Date lastDownloaded;
         @SerializedName("last_version")
         private String lastVersion;
         @SerializedName("download_count")
@@ -34,7 +36,7 @@ public class DownloadHistoryItem {
             return id;
         }
 
-        public String getLastDownloaded() {
+        public Date getLastDownloaded() {
             return lastDownloaded;
         }
 
@@ -51,7 +53,7 @@ public class DownloadHistoryItem {
         private int id;
         private String name;
         @SerializedName("update_date")
-        private String updated;
+        private Date updated;
         private String version;
         private String author;
 
@@ -63,7 +65,7 @@ public class DownloadHistoryItem {
             return name;
         }
 
-        public String getUpdated() {
+        public Date getUpdated() {
             return updated;
         }
 

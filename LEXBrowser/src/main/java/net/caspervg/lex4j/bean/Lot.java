@@ -2,6 +2,7 @@ package net.caspervg.lex4j.bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -29,9 +30,9 @@ public class Lot {
     @SerializedName("is_active")
     private boolean active;
     @SerializedName("upload_date")
-    private String uploaded;
+    private Date uploaded;
     @SerializedName("update_date")
-    private String updated;
+    private Date updated;
     @SerializedName("dependencies")
     private DependencyList dependencyList;
 
@@ -83,11 +84,11 @@ public class Lot {
         return active;
     }
 
-    public String getUploaded() {
+    public Date getUploaded() {
         return uploaded;
     }
 
-    public String getUpdated() {
+    public Date getUpdated() {
         return updated;
     }
 

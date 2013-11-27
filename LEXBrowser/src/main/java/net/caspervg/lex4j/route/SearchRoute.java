@@ -1,16 +1,18 @@
 package net.caspervg.lex4j.route;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.Lot;
 import net.caspervg.lex4j.log.LEX4JLogger;
+import net.caspervg.lex4j.serializer.LEXDateSerializer;
 import org.restlet.data.Reference;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +72,7 @@ public class SearchRoute {
 
         Route.addParameters(reference, this.parameters);
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
         Type listType = new TypeToken<List<Lot>>() {
         }.getType();
 

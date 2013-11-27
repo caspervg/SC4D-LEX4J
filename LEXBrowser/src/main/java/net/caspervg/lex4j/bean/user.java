@@ -2,6 +2,8 @@ package net.caspervg.lex4j.bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Casper
@@ -12,10 +14,8 @@ public class User {
     private int id;
     private String fullname;
     private String username;
-    private String registered;
-
-    @SerializedName("last_login")
-    private String lastLogin;
+    private Date registered;
+    private Date lastLogin;
 
     @SerializedName("user_level")
     private int userLevel;
@@ -43,6 +43,15 @@ public class User {
     @SerializedName("is_admin")
     private boolean admin;
 
+    public User() {
+        /*
+         * Hacky solution to avoid having to write seperate Date parsing rules for User.lastLogin, which uses yyyyMMddHHmmss
+         * compared to the rest of the LEX API, which uses yyyyMMdd. We could parse, but there would be timezone issues.
+         * Since the LEX API handles Basic Auth as a "log in", the lastLogin would always equal the current time anyhow.
+         */
+        this.lastLogin = new Date();
+    }
+
     public int getId() {
         return id;
     }
@@ -55,11 +64,11 @@ public class User {
         return username;
     }
 
-    public String getRegistered() {
+    public Date getRegistered() {
         return registered;
     }
 
-    public String getLastLogin() {
+    public Date getLastLogin() {
         return lastLogin;
     }
 
