@@ -29,6 +29,7 @@ public enum Route {
     ADD_COMMENT("/lot/%s/comment"),
     GET_COMMENT("/lot/%s/comment"),
     DEPENDENCY("/lot/%s/dependency"),
+    DEPENDENCY_STRING("/lot/%s/dependency-string"),
 
     // Search Routes
     SEARCH("/search"),
@@ -40,7 +41,6 @@ public enum Route {
     LOTGROUP("/category/group"),
     AUTHORS("/category/author"),
     ALL_CATEGORY("/category/all");
-
 
     private static final String base = "http://sc4devotion.com/csxlex/api/";
     private static final String version = "v1";

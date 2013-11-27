@@ -2,16 +2,19 @@ package net.caspervg.lex4j.route;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.Comment;
 import net.caspervg.lex4j.bean.DependencyList;
+import net.caspervg.lex4j.bean.DependencyString;
 import net.caspervg.lex4j.bean.Lot;
 import net.caspervg.lex4j.log.LEX4JLogger;
 import net.caspervg.lex4j.serializer.LEXDateSerializer;
 import org.restlet.data.Disposition;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.data.Reference;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 
@@ -20,7 +23,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 /**
@@ -201,6 +206,42 @@ public class LotRoute {
             return gson.fromJson(repr.getText(), DependencyList.class);
         } catch (IOException ex) {
             LEX4JLogger.log(Level.WARNING, "Could not retrieve lot dependencies correctly!");
+            return null;
+        }
+    }
+
+    /**
+     * Updates the dependency string for a lot/file
+     * @param id ID of the lot/file
+     * @param dep new dependency string
+     * @custom.require Authentication and Administration
+     */
+    public void updateDependencyString(int id, String dep) {
+        ClientResource resource = new ClientResource(Route.DEPENDENCY_STRING.url(id));
+        Reference ref = resource.getReference();
+
+        Form form = new Form();
+        form.add("string", dep);
+
+        resource.setChallengeResponse(this.auth.toChallenge());
+        resource.put(form);
+    }
+
+    /**
+     * Retrieves the dependency string for a lot/file
+     * @param id ID of the lot/file
+     * @return the dependency string
+     */
+    public String getDependencyString(int id) {
+        ClientResource resource = new ClientResource(Route.DEPENDENCY_STRING.url(id));
+
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
+
+        try {
+            Representation repr = resource.get();
+            return gson.fromJson(repr.getText(), DependencyString.class).getDependency();
+        } catch (IOException ex) {
+            LEX4JLogger.log(Level.WARNING, "Could not retrieve lot dependency string correctly!");
             return null;
         }
     }
