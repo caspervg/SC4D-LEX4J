@@ -35,6 +35,7 @@ public class DownloadListItem {
         @SerializedName("update_date")
         private String updated;
         private String version;
+        private String author;
 
         public int getId() {
             return id;
@@ -50,6 +51,10 @@ public class DownloadListItem {
 
         public String getVersion() {
             return version;
+        }
+
+        public String getAuthor() {
+            return author;
         }
     }
 }

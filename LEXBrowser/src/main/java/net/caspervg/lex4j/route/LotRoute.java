@@ -105,6 +105,10 @@ public class LotRoute {
             FileOutputStream fos = new FileOutputStream(file);
             repr.write(fos);
 
+            // Flush remaining buffer to output and close the stream
+            fos.flush();
+            fos.close();
+
             return true;
         } catch (IOException ex) {
             LEX4JLogger.log(Level.WARNING, "Could not write download to the FileOutputStream!");
@@ -122,6 +126,18 @@ public class LotRoute {
         resource.setChallengeResponse(this.auth.toChallenge());
 
         resource.get();
+    }
+
+    /**
+     * Removes a file from the user's download list
+     * @param id : ID of the lot/file
+     * @custom.require Authentication
+     */
+    public void deleteLotDownloadList(int id) {
+        ClientResource resource = new ClientResource(Route.DOWNLOADLIST_LOT.url(id));
+        resource.setChallengeResponse(this.auth.toChallenge());
+
+        resource.delete();
     }
 
     /**
