@@ -4,10 +4,7 @@ import org.restlet.data.ChallengeResponse;
 import org.restlet.data.ChallengeScheme;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 21/11/13
- * Time: 12:12
+ * This class is used to authenticate the user with the SC4Devotion LEX API.
  */
 public class Auth {
 
@@ -15,7 +12,8 @@ public class Auth {
     private String password;
 
     /**
-     * Create a new Authenication token
+     * Constructs a new authentication token with the username and password
+     *
      * @param username Username
      * @param password Password
      */
@@ -25,40 +23,46 @@ public class Auth {
     }
 
     /**
-     * Gets the Username
-     * @return the Username
+     * Returns the username of this authentication token
+     *
+     * @return the username of this authentication token
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     * Sets a new Username
-     * @param username the Username to set
+     * Sets the username of this authentication token
+     *
+     * @param username the username to set
      */
     public void setUsername(String username) {
         this.username = username;
     }
 
     /**
-     * Gets the Password
-     * @return the Password
+     * Returns the password of this authentication token
+     *
+     * @return the password of this authentication token
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     * Sets a new Password
-     * @param password the Password to set
+     * Sets the password of this authentication token
+     *
+     * @param password the password to set
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
     /**
-     * Helper method to create the Authentication token for Restlet
-     * @return the ChallengeResponse for HTTP Basic Authentication
+     * Helper method to create the authentication token for HTTP Basic Authentication using Restlet
+     * @see org.restlet.data.ChallengeResponse
+     *
+     * @return the ChallengeResponse for this authentication token
      */
     public ChallengeResponse toChallenge() {
         return new ChallengeResponse(ChallengeScheme.HTTP_BASIC, this.username, this.password);

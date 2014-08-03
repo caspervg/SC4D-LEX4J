@@ -12,10 +12,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 26/11/13
- * Time: 8:58
+ * Convenience class used for serialisation of the SC4D LEX date format to Java Dates.
  */
 public class LEXDateSerializer implements JsonDeserializer<Date> {
 

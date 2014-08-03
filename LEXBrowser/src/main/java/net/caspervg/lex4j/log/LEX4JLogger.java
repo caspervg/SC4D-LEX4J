@@ -4,15 +4,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 21/11/13
- * Time: 13:31
+ * This class provides a static logger utility
  */
 public class LEX4JLogger {
 
     /**
-     * Logging helper
+     * Convenience method for logging within the LEX4J library
+     *
      * @param level Level of the log message
      * @param message Log message
      */

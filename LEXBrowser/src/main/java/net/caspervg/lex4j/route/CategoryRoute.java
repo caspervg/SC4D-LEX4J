@@ -16,26 +16,22 @@ import java.util.List;
 import java.util.logging.Level;
 
 /**
- * Routing for the Category Endpoint.
- * <b>Attention: </b> methods can throw ResourceExceptions.
+ * Provides routing options for the <i>Category</i> endpoint
  * @see <a href="http://restlet.org/learn/javadocs/2.1/jse/api/org/restlet/data/Status.html">Restlet Status API Javadoc</a>
  * @see <a href="https://github.com/caspervg/SC4Devotion-LEX-API/blob/master/Category.md">LEX API Overview on Github</a>
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 21/11/13
- * Time: 19:11
  */
 public class CategoryRoute {
 
     /**
-     * Create a new CategoryRoute, without Authorisation token. Category doesn't require Authentication.
+     * Constructs a CategoryRoute. This does not require authentication.
      */
     public CategoryRoute() {
     }
 
     /**
-     * Fetch the LEX Broad Categories
-     * @return List of BroadCategories
+     * Returns the broad categories
+     *
+     * @return the broad categories
      */
     public List<BroadCategory> getBroadCategories() {
         ClientResource resource = new ClientResource(Route.BROAD_CATEGORY.url());
@@ -54,8 +50,9 @@ public class CategoryRoute {
     }
 
     /**
-     * Fetch the LEX Categories
-     * @return List of Categories
+     * Returns the LEX categories
+     *
+     * @return the LEX categories
      */
     public List<Category> getLEXCategories() {
         ClientResource resource = new ClientResource(Route.LEX_CATEGORY.url());
@@ -74,8 +71,9 @@ public class CategoryRoute {
     }
 
     /**
-     * Fetch the LEX Types
-     * @return List of Types
+     * Returns the LEX types
+     *
+     * @return the LEX types
      */
     public List<TypeCategory> getLEXTypes() {
         ClientResource resource = new ClientResource(Route.LEX_TYPE.url());
@@ -94,8 +92,9 @@ public class CategoryRoute {
     }
 
     /**
-     * Fetch the LEX Lot Groups
-     * @return List of Categories (Groups)
+     * Returns the lot groups
+     *
+     * @return the lot groups
      */
     public List<Category> getLotGroups() {
         ClientResource resource = new ClientResource(Route.LOTGROUP.url());
@@ -114,8 +113,9 @@ public class CategoryRoute {
     }
 
     /**
-     * Fetch the LEX Authors (people who have uploaded at least one file)
-     * @return List of Categories (Authors)
+     * Returns the lot authors (these are people who have uploaded at least one file)
+     *
+     * @return the lot authors
      */
     public List<Category> getLotAuthors() {
         ClientResource resource = new ClientResource(Route.AUTHORS.url());
@@ -134,8 +134,9 @@ public class CategoryRoute {
     }
 
     /**
-     * Fetch all LEX Categories (BroadCategories, LEXCategories, LEXTypes, LotGroups, Authors)
-     * @return CategoryOverview with the results
+     * Returns all the categories
+     *
+     * @return all the categories
      */
     public CategoryOverview getCategories() {
         ClientResource resource = new ClientResource(Route.ALL_CATEGORY.url());

@@ -23,36 +23,36 @@ import java.util.Map;
 import java.util.logging.Level;
 
 /**
- * <b>Attention: </b> methods can throw ResourceExceptions.
+ * Provides routing options for the <i>User</i> endpoint
  * @see <a href="http://restlet.org/learn/javadocs/2.1/jse/api/org/restlet/data/Status.html">Restlet Status API Javadoc</a>
  * @see <a href="https://github.com/caspervg/SC4Devotion-LEX-API/blob/master/User.md">LEX API Overview on Github</a>
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 21/11/13
- * Time: 12:10
  */
 public class UserRoute {
 
     private Auth auth;
 
     /**
-     * Create a new LotRoute, without Authorisation token. Some functions may not work.
+     * Constructs a new UserRoute, without authentication.
+     *
+     * <p>This is useful for {@link #postRegistration} and {@link #getActivation}</p>
      */
     public UserRoute() {
         this(null);
     }
 
     /**
-     * Create a new LotRoute, with Authorisation token.
-     * @param auth Authentication token
+     * Constructs a new UserRoute with an authentication token.
+     *
+     * @param auth the authentication token to use
      */
     public UserRoute(Auth auth) {
         this.auth = auth;
     }
 
     /**
-     * Retrieve the user that has been authenticated in the constructor
-     * @return User's profile
+     * Returns the current user
+     *
+     * @return the current user
      * @custom.require Authentication
      */
     public User getUser() {
@@ -71,9 +71,10 @@ public class UserRoute {
     }
 
     /**
-     * Retrieve the user with requested ID
-     * @param id ID of the User
-     * @return Requested User's profile
+     * Returns the user with the primary key
+     *
+     * @param id the primary key of the user
+     * @return the user
      * @custom.require Authentication and Administrator
      */
     public User getUser(int id) {
@@ -92,11 +93,13 @@ public class UserRoute {
     }
 
     /**
-     * Retrieves a list of all Users
-     * @param concise true: only ID and Username (the rest will be null) - false: all data
+     * Returns all users
+     *
+     * @param concise <code>true</code> if you only want the primary key and the username;
+     *                <code>false</code> otherwise
      * @param start start number of results
      * @param amount number of results to return
-     * @return List of Users
+     * @return all users
      * @custom.require Authentication and Administrator
      */
     public List<User> getUserList(boolean concise, int start, int amount) {
@@ -125,8 +128,9 @@ public class UserRoute {
     }
 
     /**
-     * Retrieves the download list for the User authenticated in the constructor
-     * @return List of DownloadListItems
+     * Returns the download list of the current user
+     *
+     * @return the download list of the current user
      * @custom.require Authentication
      */
     public List<DownloadListItem> getDownloadList() {
@@ -147,8 +151,9 @@ public class UserRoute {
     }
 
     /**
-     * Retrieves the download history for the User authenticated in the constructor
-     * @return List of DownloadHistoryItems
+     * Returns the download history of the current user
+     *
+     * @return the download list of the current user
      * @custom.require Authentication
      */
     public List<DownloadHistoryItem> getDownloadHistory() {
@@ -170,10 +175,11 @@ public class UserRoute {
 
     /**
      * Registers a new user for the SC4D LEX
-     * @param username the username
-     * @param password the password
-     * @param email the e-mail
-     * @param fullname the fullname (can be blank)
+     *
+     * @param username the username for the new user
+     * @param password the password for the new user
+     * @param email the e-mail for the new user
+     * @param fullname the name for the new user (can be blank)
      */
     public void postRegistration(String username, String password, String email, String fullname) {
         ClientResource resource = new ClientResource(Route.REGISTER.url());
@@ -190,7 +196,8 @@ public class UserRoute {
 
     /**
      * Activates a user on the SC4D LEX
-     * @param key the activation key
+     *
+     * @param key the activation key to use
      */
     public void getActivation(String key) {
         ClientResource resource = new ClientResource(Route.ACTIVATE.url());

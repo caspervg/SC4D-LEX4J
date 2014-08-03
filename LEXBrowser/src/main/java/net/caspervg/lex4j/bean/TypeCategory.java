@@ -1,15 +1,17 @@
 package net.caspervg.lex4j.bean;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 22/11/13
- * Time: 10:17
+ * This class provides a type category
  */
 public class TypeCategory extends Category {
 
     private String description;
 
+    /**
+     * Returns the description of this type category
+     *
+     * @return the description of this type category
+     */
     public String getDescription() {
         return description;
     }

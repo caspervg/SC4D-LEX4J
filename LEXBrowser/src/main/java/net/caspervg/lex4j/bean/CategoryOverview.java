@@ -5,10 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 22/11/13
- * Time: 10:17
+ * This class provides an overview of all types of categories
  */
 public class CategoryOverview {
 
@@ -27,22 +24,47 @@ public class CategoryOverview {
     @SerializedName("author")
     private List<Category> lotAuthors;
 
+    /**
+     * Returns the broad categories
+     *
+     * @return the broad categories
+     */
     public List<BroadCategory> getBroadCategories() {
         return broadCategories;
     }
 
+    /**
+     * Returns the LEX categories
+     *
+     * @return the LEX categories
+     */
     public List<Category> getLEXCategories() {
         return lexCategories;
     }
 
+    /**
+     * Returns the LEX types
+     *
+     * @return the LEX types
+     */
     public List<TypeCategory> getLEXTypes() {
         return lexTypeCategories;
     }
 
+    /**
+     * Returns the lot groups
+     *
+     * @return the lot groups
+     */
     public List<Category> getLotGroups() {
         return lotGroups;
     }
 
+    /**
+     * Returns the lot authors
+     *
+     * @return the lot authors
+     */
     public List<Category> getLotAuthors() {
         return lotAuthors;
     }

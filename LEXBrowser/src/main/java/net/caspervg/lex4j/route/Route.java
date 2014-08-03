@@ -5,10 +5,7 @@ import org.restlet.data.Reference;
 import java.util.Map;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 21/11/13
- * Time: 12:20
+ * Provides the various LEX API endpoints supported by the LEX4J library
  */
 public enum Route {
 
@@ -47,8 +44,9 @@ public enum Route {
     private String url;
 
     /**
-     * Creates a new Route
-     * @param url Endpoint for the route, uses %s in case an ID has to be filled in
+     * Constructs a new route based on the endpoint. Use <code>%s</code> if a parameter has be filled in.
+     *
+     * @param url the endpoint for this route
      */
     Route(String url) {
         this.url = url;
@@ -60,24 +58,29 @@ public enum Route {
     }
 
     /**
-     * @return a full URL for this Route
+     * Returns the url for this Route
+     *
+     * @return the URL for this Route
      */
     public String url() {
         return (this.base + this.version + this.url);
     }
 
     /**
-     * @param id The ID to be filled into the Endpoint
-     * @return a full URL for this Route with given ID
+     * Returns the url for this Route, with the ID filled in
+     *
+     * @param id the ID to be filled into the endpoint
+     * @return the url for this Route, with the ID filled in
      */
     public String url(int id) {
         return String.format(url(), id);
     }
 
     /**
-     * Static function to make adding GET Parameters easier for myself
-     * @param ref Reference (part of Restlet library)
-     * @param param Map of Strings (key) and Objects (values)
+     * Convenience method that helps filling in query parameters
+     *
+     * @param ref reference to use for the generation
+     * @param param parameters and their values to add to the request
      */
     protected static void addParameters(Reference ref, Map<String,Object> param) {
         for (String key : param.keySet()) {

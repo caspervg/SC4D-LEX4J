@@ -19,20 +19,16 @@ import java.util.Map;
 import java.util.logging.Level;
 
 /**
- * <b>Attention: </b> methods can throw ResourceExceptions.
+ * Provides routing options for the <i>Search</i> endpoint
  * @see <a href="http://restlet.org/learn/javadocs/2.1/jse/api/org/restlet/data/Status.html">Restlet Status API Javadoc</a>
  * @see <a href="https://github.com/caspervg/SC4Devotion-LEX-API/blob/master/Search.md">LEX API Overview on Github</a>
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 22/11/13
- * Time: 11:10
  */
 public class SearchRoute {
 
     private Map<String, Object> parameters;
 
     /**
-     * Create a new LotRoute, without Authorisation token. Search doesn't require Authentication.
+     * Constructs a new SearchRoute. This does not require authentication.
      */
     public SearchRoute() {
         this.parameters = new HashMap<String, Object>();
@@ -40,6 +36,7 @@ public class SearchRoute {
 
     /**
      * Adds a parameter to the search operation
+     *
      * @param filter the filter to be added
      * @param value value of the filter to be added. String.valueOf() of this Object is used for the search.
      */
@@ -49,14 +46,15 @@ public class SearchRoute {
 
     /**
      * Removes a parameter from the search operation
-     * @param filter removes this filter from the parameters
+     *
+     * @param filter filter to be removed
      */
     public void removeFilter(Filter filter) {
         parameters.remove(filter.repr());
     }
 
     /**
-     * Clears all parameters from the search operation
+     * Removes all parameters from the search operation
      */
     public void clearFilters() {
         this.parameters.clear();
@@ -64,7 +62,8 @@ public class SearchRoute {
 
     /**
      * Performs the search operation based on filters that are currently active
-     * @return List of Lots
+     *
+     * @return the files that were returned by the search operation
      */
     public List<Lot> doSearch() {
         ClientResource resource = new ClientResource(Route.SEARCH.url());

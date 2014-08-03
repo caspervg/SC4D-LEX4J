@@ -1,15 +1,17 @@
 package net.caspervg.lex4j.bean;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 22/11/13
- * Time: 10:17
+ * This class provides a broad category
  */
 public class BroadCategory extends Category {
 
     private String image;
 
+    /**
+     * Returns the url of the image associated with this broad category
+     *
+     * @return the image for this category
+     */
     public String getImage() {
         return image;
     }

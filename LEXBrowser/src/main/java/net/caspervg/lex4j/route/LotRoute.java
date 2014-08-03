@@ -22,20 +22,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 
 /**
- * Routing for the Lot Endpoint.
- * <b>Attention: </b> methods can throw ResourceExceptions.
+ * Provides routing options for the <i>Lot</i> endpoint
  * @see <a href="http://restlet.org/learn/javadocs/2.1/jse/api/org/restlet/data/Status.html">Restlet Status API Javadoc</a>
  * @see <a href="https://github.com/caspervg/SC4Devotion-LEX-API/blob/master/Lot.md">LEX API Overview on Github</a>
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 21/11/13
- * Time: 19:11
  */
 public class LotRoute {
 

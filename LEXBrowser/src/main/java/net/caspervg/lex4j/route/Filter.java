@@ -1,10 +1,9 @@
 package net.caspervg.lex4j.route;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 22/11/13
- * Time: 11:57
+ * Provides several filters used to send search requests to the LEX
+ *
+ * @author Casper Van Gheluwe
  */
 public enum Filter {
     START("start"),
@@ -24,7 +23,8 @@ public enum Filter {
     private String representation;
 
     /**
-     * Creates a new Filter
+     * Constructs a new filter with it's string representation
+     *
      * @param representation String representation
      */
     Filter(String representation) {
@@ -32,7 +32,9 @@ public enum Filter {
     }
 
     /**
-     * @return The String representation of this Filter for internal use
+     * Returns the String representation of this Filter
+     *
+     * @return The String representation of this Filter
      */
     protected String repr() {
         return this.representation;
