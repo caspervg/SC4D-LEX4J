@@ -8,6 +8,32 @@
     <artifactId>LEX4J</artifactId>
     <version>0.5-BETA</version>
 
+    <name>SC4Devotion LEX4J</name>
+    <description>A library that be used to send requests to the SC4Devotion Lot Exchange API</description>
+    <url>http://caspervg.net/public/sc4d-lex4j/</url>
+
+    <licenses>
+        <license>
+            <name>The GNU Lesser General Public License, Version 3.0</name>
+            <url>https://www.gnu.org/licenses/lgpl-3.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Casper Van Gheluwe</name>
+            <email>caspervg@gmail.com</email>
+            <organization>CasperVg</organization>
+            <organizationUrl>http://caspervg.net</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:caspervg/SC4D-LEX4J.git</connection>
+        <developerConnection>scm:git:git@github.com:caspervg/SC4D-LEX4J.git</developerConnection>
+        <url>git@github.com:caspervg/SC4D-LEX4J.git</url>
+    </scm>
+
     <repositories>
         <repository>
             <id>maven-restlet</id>
