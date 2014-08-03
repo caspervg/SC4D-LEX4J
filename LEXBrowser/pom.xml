@@ -6,7 +6,7 @@
 
     <groupId>LEX4J</groupId>
     <artifactId>LEX4J</artifactId>
-    <version>0.1-INDEV</version>
+    <version>0.5-BETA</version>
 
     <repositories>
         <repository>
