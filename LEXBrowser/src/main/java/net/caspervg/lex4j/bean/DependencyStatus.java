@@ -9,9 +9,10 @@ public class DependencyStatus {
 
     private boolean ok;
     private boolean deleted;
-    private boolean superceded;
+    @SerializedName("superceded")
+    private boolean superseded;
     @SerializedName("superceded_by")
-    private int supercededBy;
+    private int supersededBy;
     private boolean locked;
 
     /**
@@ -40,8 +41,8 @@ public class DependencyStatus {
      * @return <code>true</code> if this dependency is superseded;
      *         <code>false</code> otherwise
      */
-    public boolean isSuperceded() {
-        return superceded;
+    public boolean isSuperseded() {
+        return superseded;
     }
 
     /**
@@ -49,8 +50,8 @@ public class DependencyStatus {
      *
      * @return ID of the file this dependency was superseded by
      */
-    public int getSupercededBy() {
-        return supercededBy;
+    public int getSupersededBy() {
+        return supersededBy;
     }
 
     /**
