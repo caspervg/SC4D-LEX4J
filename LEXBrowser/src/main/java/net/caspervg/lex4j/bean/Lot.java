@@ -13,6 +13,7 @@ public class Lot {
     private int id;
     private String name;
     private String version;
+    @SerializedName("num_downloads")
     private int downloads;
     private String author;
     @SerializedName("is_exclusive")
