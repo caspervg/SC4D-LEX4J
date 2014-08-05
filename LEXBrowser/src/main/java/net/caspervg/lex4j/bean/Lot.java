@@ -175,4 +175,14 @@ public class Lot {
     public DependencyList getDependencyList() {
         return dependencyList;
     }
+
+    /**
+     * Returns the String representation of this file
+     *
+     * @return the String representation of this file
+     */
+    @Override
+    public String toString() {
+        return this.name + " (" + this.id + ")";
+    }
 }

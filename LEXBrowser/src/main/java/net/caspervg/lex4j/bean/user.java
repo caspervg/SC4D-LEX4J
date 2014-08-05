@@ -188,4 +188,14 @@ public class User {
     public boolean isAdmin() {
         return admin;
     }
+
+    /**
+     * Returns the String representation of this file
+     *
+     * @return the String representation of this file
+     */
+    @Override
+    public String toString() {
+        return this.username + " (" + this.id + ")";
+    }
 }

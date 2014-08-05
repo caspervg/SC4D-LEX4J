@@ -73,4 +73,14 @@ public class Comment {
     public boolean isByAdmin() {
         return byAdmin;
     }
+
+    /**
+     * Returns the String representation of this comment
+     *
+     * @return the String representation of this comment
+     */
+    @Override
+    public String toString() {
+        return this.text + " (" + this.id + ")";
+    }
 }

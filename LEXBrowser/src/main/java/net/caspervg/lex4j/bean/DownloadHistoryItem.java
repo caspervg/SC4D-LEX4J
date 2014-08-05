@@ -78,6 +78,16 @@ public class DownloadHistoryItem {
         public int getTimesDownloaded() {
             return timesDownloaded;
         }
+
+        /**
+         * Returns the String representation of this record
+         *
+         * @return the String representation of this record
+         */
+        @Override
+        public String toString() {
+            return String.valueOf(this.getId());
+        }
     }
 
     /**
@@ -136,5 +146,25 @@ public class DownloadHistoryItem {
         public String getAuthor() {
             return author;
         }
+
+        /**
+         * Returns the String representation of this file
+         *
+         * @return the String representation of this file
+         */
+        @Override
+        public String toString() {
+            return this.getName() + " (" + this.getId() + ")";
+        }
+    }
+
+    /**
+    * Returns the String representation of this download history item
+    *
+    * @return the String representation of this download history item
+    */
+    @Override
+    public String toString() {
+        return this.getRecord() + " -> " + this.getLot();
     }
 }

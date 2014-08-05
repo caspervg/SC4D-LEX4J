@@ -45,6 +45,16 @@ public class DownloadListItem {
         public int getId() {
             return id;
         }
+
+        /**
+         * Returns the String representation of this record
+         *
+         * @return the String representation of this record
+         */
+        @Override
+        public String toString() {
+            return String.valueOf(this.getId());
+        }
     }
 
     /**
@@ -103,5 +113,25 @@ public class DownloadListItem {
         public String getAuthor() {
             return author;
         }
+
+        /**
+         * Returns the String representation of this file
+         *
+         * @return the String representation of this file
+         */
+        @Override
+        public String toString() {
+            return this.getName() + " (" + this.getId() + ")";
+        }
+    }
+
+    /**
+     * Returns the String representation of this download list item
+     *
+     * @return the String representation of this download list item
+     */
+    @Override
+    public String toString() {
+        return this.getRecord() + " -> " + this.getLot();
     }
 }

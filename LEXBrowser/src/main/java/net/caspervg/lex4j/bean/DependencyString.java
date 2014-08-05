@@ -16,4 +16,14 @@ public class DependencyString {
     public String getDependency() {
         return dependency;
     }
+
+    /**
+     * Returns the String representation of this dependency string
+     *
+     * @return the String representation of this dependency string
+     */
+    @Override
+    public String toString() {
+        return dependency;
+    }
 }

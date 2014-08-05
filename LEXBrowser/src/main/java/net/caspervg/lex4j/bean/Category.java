@@ -26,4 +26,13 @@ public class Category {
         return name;
     }
 
+    /**
+     * Returns the String representation of this category
+     *
+     * @return the String representation of this category
+     */
+    @Override
+    public String toString() {
+        return this.name + " (" + this.id + ")";
+    }
 }

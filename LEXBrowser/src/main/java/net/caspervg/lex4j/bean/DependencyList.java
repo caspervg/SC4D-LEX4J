@@ -38,4 +38,14 @@ public class DependencyList {
     public List<Dependency> getList() {
         return list;
     }
+
+    /**
+     * Returns the String representation of this dependency list
+     *
+     * @return the String representation of this dependency list
+     */
+    @Override
+    public String toString() {
+        return this.getList().toString();
+    }
 }

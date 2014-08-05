@@ -53,4 +53,14 @@ public class Dependency {
     public DependencyStatus getStatus() {
         return status;
     }
+
+    /**
+     * Returns the String representation of this dependency
+     *
+     * @return the String representation of this dependency
+     */
+    @Override
+    public String toString() {
+        return this.getName() + " (" + this.getId() + ")";
+    }
 }
