@@ -40,7 +40,7 @@ public enum Route {
     ALL_CATEGORY("/category/all");
 
     private static final String base = "http://sc4devotion.com/csxlex/api/";
-    private static final String version = "v1";
+    private static final String version = "v2";
     private String url;
 
     /**
