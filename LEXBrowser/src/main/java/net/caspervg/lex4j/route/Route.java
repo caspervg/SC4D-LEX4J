@@ -63,7 +63,7 @@ public enum Route {
      * @return the URL for this Route
      */
     public String url() {
-        return (this.base + this.version + this.url);
+        return (base + version + this.url);
     }
 
     /**
