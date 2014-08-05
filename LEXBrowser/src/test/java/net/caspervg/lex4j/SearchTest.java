@@ -26,6 +26,7 @@ public class SearchTest {
             route.addFilter(Filter.CONCISE, true);
             route.addFilter(Filter.START, 5);
             route.addFilter(Filter.CREATOR, 1);
+            route.addFilter(Filter.TITLE, "concorde");
             List<Lot> lots = route.doSearch();
             Assert.assertEquals(1007, lots.get(0).getId());
         } catch (ResourceException ex) {

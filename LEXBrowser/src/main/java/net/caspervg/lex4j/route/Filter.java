@@ -51,6 +51,10 @@ public enum Filter {
      */
     GROUP("group"),
     /**
+     * Filter by (a part of) the title of the file
+     */
+    TITLE("query"),
+    /**
      * Exclude results that are not LEX certified
      */
     EXCLUDE_NOT_CERTIFIED("exclude_notcert"),
