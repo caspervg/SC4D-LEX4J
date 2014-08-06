@@ -41,7 +41,7 @@ public enum Filter {
      */
     CONCISE("concise", Boolean.class),
     /**
-     * Filter by author of the file. Requires an Integer parameter (user ID of the author).
+     * Filter by author of the file. Requires an Integer parameter (user id of the author).
      */
     CREATOR("creator", Integer.class),
     /**
@@ -49,31 +49,46 @@ public enum Filter {
      */
     BROAD_CATEGORY("broad_category", String.class),
     /**
-     * Filter by LEX category of the file. Requires an Integer parameter (category id of the author)
+     * Filter by LEX category of the file. Requires an Integer parameter (category id of the category).
      */
     LEX_CATEGORY("lex_category", Integer.class),
     /**
-     * Filter by LEX type of the file
+     * Filter by LEX type of the file. Requires an Integer parameter (type id of the category).
      */
     LEX_TYPE("lex_type", Integer.class),
     /**
-     * Filter by broad type of the file (a very rough approach)
+     * Filter by broad type of the file (a very rough approach). Requires a String parameter.
+     * <ul>
+     *     <li><code>"lotbat"</code> - LOTs and BATs</li>
+     *     <li><code>"dependency"</code> - Dependencies</li>
+     *     <li><code>"map"</code> - Maps</li>
+     *     <li><code>"mod"</code> - Mods</li>
+     *     <li><code>"other"</code> - Files, Tools, Models, etc.</li>
+     * </ul>
      */
     BROAD_TYPE("broad_type", String.class),
     /**
-     * Filter by lot group of the file
+     * Filter by lot group of the file. Requires an Integer parameter (group id of the group).
      */
     GROUP("group", Integer.class),
     /**
-     * Filter by (a part of) the title of the file
+     * Filter by (a part of) the title of the file. Requires a String parameter (text to search).
      */
     TITLE("query", String.class),
     /**
-     * Exclude results that are not LEX certified
+     * Exclude results that are not LEX Certified. Requires a Boolean parameter.
+     * <ul>
+     *     <li><code>true</code> - only return LEX Certified files</li>
+     *     <li><code>false</code> - return all files</li>
+     * </ul>
      */
     EXCLUDE_NOT_CERTIFIED("exclude_notcert", Boolean.class),
     /**
-     * Exclude results that are locked (not downloadable)
+     * Exclude results that are locked (not downloadable). Requires a Boolean parameter.
+     * <ul>
+     *     <li><code>true</code> - only return active (not locked) files</li>
+     *     <li><code>false</code> - return all files</li>
+     * </ul>
      */
     EXCLUDE_LOCKED("exclude_locked", Boolean.class);
 
