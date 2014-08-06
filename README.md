@@ -11,7 +11,7 @@ Installation is easy using the Maven Central Repository. Just add the following 
   <dependency>
       <groupId>net.caspervg.lex4j</groupId>
       <artifactId>LEX4J</artifactId>
-      <version>0.7.5</version>
+      <version>0.8</version>
   </dependency>
   ...
 </dependencies>
@@ -32,6 +32,9 @@ Installation is easy using the Maven Central Repository. Just add the following 
 * Improved handling of incorrect search filter parameters, will now throw a FilterParameterException if you supply an incorrect parameter type
 * Further improved documentation for the search filters
 * Fixed a bug that caused downloads in the Lot bean to always stay at 0
+
+##### v0.8
+* Further improved search filter documentation
 
 ### Documentation
 Documentation (Javadoc) is available at http://caspervg.net/public/sc4d-lex4j
