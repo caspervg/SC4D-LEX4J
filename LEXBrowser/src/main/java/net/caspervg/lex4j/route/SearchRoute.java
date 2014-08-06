@@ -41,7 +41,13 @@ public class SearchRoute {
      * @param value value of the filter to be added. String.valueOf() of this Object is used for the search.
      */
     public void addFilter(Filter filter, Object value) {
-        parameters.put(filter.repr(), value);
+        if (filter.getParameterClass().isInstance(value)) {
+           parameters.put(filter.repr(), value);
+        } else {
+            String msg = "You need to supply the correct parameter for the " +
+                    filter + " filter. Expecting a(n) " + filter.getParameterClass().getSimpleName();
+            throw new FilterParameterException(msg);
+        }
     }
 
     /**
