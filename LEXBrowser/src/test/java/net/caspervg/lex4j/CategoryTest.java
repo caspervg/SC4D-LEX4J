@@ -10,12 +10,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 22/11/13
- * Time: 10:17
- */
 public class CategoryTest {
 
     @Test

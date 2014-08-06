@@ -5,9 +5,9 @@ import net.caspervg.lex4j.bean.DownloadHistoryItem;
 import net.caspervg.lex4j.bean.DownloadListItem;
 import net.caspervg.lex4j.bean.User;
 import net.caspervg.lex4j.route.UserRoute;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Assert;
 import org.restlet.resource.ResourceException;
 
 import java.io.File;
@@ -16,12 +16,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 21/11/13
- * Time: 12:33
- */
 public class UserTest {
 
     private static Properties prop = new Properties();
@@ -29,12 +23,10 @@ public class UserTest {
     @BeforeClass
     public static void setUpClass() {
         try {
-            /*
-             * If you want to run these tests, place a auth.properties file with your username and password in a directory.
-             */
-            prop.load(new FileInputStream(new File("C:\\Users\\Casper\\IdeaProjects\\SC4Devotion-LEXBrowser\\LEXBrowser\\src\\test\\java\\net\\caspervg\\lex4j\\auth.properties")));
+            // If you want to run these tests, place a auth.properties file with your username and password in a directory.
+            prop.load(new FileInputStream(new File("C:\\Users\\Gebruiker\\IdeaProjects\\SC4D-LEX4J\\LEXBrowser\\auth.properties")));
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
     }
 
@@ -44,8 +36,6 @@ public class UserTest {
         UserRoute route = new UserRoute(auth);
         try {
             User user = route.getUser();
-            System.out.println(user.getRegistered());
-            System.out.println(user.getLastLogin());
             Assert.assertEquals(user.getUsername(), "caspervg");
         } catch (ResourceException ex) {
             System.out.println(ex.getStatus());
@@ -88,7 +78,7 @@ public class UserTest {
         UserRoute route = new UserRoute(auth);
         try {
             List<DownloadListItem> dlList = route.getDownloadList();
-            Assert.assertEquals(dlList.get(0).getRecord().getId(), 13099621);
+            Assert.assertEquals(dlList.get(0).getLot().getId(), 670);
         } catch (ResourceException ex) {
             System.out.println(ex.getStatus());
         }

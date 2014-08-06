@@ -7,20 +7,17 @@ import net.caspervg.lex4j.bean.Lot;
 import net.caspervg.lex4j.route.LotRoute;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Casper
- * Date: 21/11/13
- * Time: 12:33
- */
 public class LotTest {
 
     private static Properties prop = new Properties();
@@ -28,12 +25,10 @@ public class LotTest {
     @BeforeClass
     public static void setUpClass() {
         try {
-            /*
-             * If you want to run these tests, place a auth.properties file with your username and password in a directory.
-             */
-            prop.load(new FileInputStream(new File("C:\\Users\\Casper\\IdeaProjects\\SC4Devotion-LEXBrowser\\LEXBrowser\\src\\test\\java\\net\\caspervg\\lex4j\\auth.properties")));
+            // If you want to run these tests, place a auth.properties file with your username and password in a directory.
+            prop.load(new FileInputStream(new File("C:\\Users\\Gebruiker\\IdeaProjects\\SC4D-LEX4J\\LEXBrowser\\auth.properties")));
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
     }
 
@@ -64,6 +59,7 @@ public class LotTest {
     }
 
     @Test
+    @Ignore
     public void lotDownloadTest() {
         Auth auth = new Auth(prop.getProperty("username"), prop.getProperty("password"));
         LotRoute route = new LotRoute(auth);
@@ -92,8 +88,7 @@ public class LotTest {
         LotRoute route = new LotRoute();
         try {
             List<Comment> list = route.getComment(900);
-            System.out.println(list.get(0).getDate());
-            //Assert.assertEquals(34299, list.get(0).getId());
+            Assert.assertEquals(35538, list.get(0).getId());
         } catch (ResourceException ex) {
             System.out.println(ex.getStatus());
         }
