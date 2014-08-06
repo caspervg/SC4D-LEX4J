@@ -18,11 +18,20 @@ Installation is easy using the Maven Central Repository. Just add the following 
 ```
 
 ### Changelog
-* v. 0.5 - Initial release
-* v. 0.6 - Improved documentation for the search filters
-* v. 0.7 - Switched to v2 LEX API, add support for new search query
-* v. 0.7.5 - Improved handling of incorrect search filter parameters, will now throw a FilterParameterException
-if you supply an incorrect parameter type.
+##### v0.5
+* Initial release
+
+##### v0.6
+* Improved documentation for the search filters
+
+##### v0.7
+* Switched to v2 LEX API
+* Add support for new search query
+
+##### v0.7.5
+* Improved handling of incorrect search filter parameters, will now throw a FilterParameterException if you supply an incorrect parameter type
+* Further improved documentation for the search filters
+* Fixed a bug that caused downloads in the Lot bean to always stay at 0
 
 ### Documentation
 Documentation (Javadoc) is available at http://caspervg.net/public/sc4d-lex4j
