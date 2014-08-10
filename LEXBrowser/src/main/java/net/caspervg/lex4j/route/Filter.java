@@ -76,6 +76,14 @@ public enum Filter {
      */
     TITLE("query", String.class),
     /**
+     * Add lists of dependencies to each search result. By default not active. Requires a String parameter.
+     * <ul>
+     *     <li><code>"full"</code> - Full list of dependencies, similar to {@link LotRoute#getDependencyList(int)}</li>
+     *     <li><code>"concise"</code> - Concise list of dependencies, only IDs for internal dependencies</li>
+     * </ul>
+     */
+    DEPENDENCIES("dependencies", String.class),
+    /**
      * Exclude results that are not LEX Certified. Requires a Boolean parameter.
      * <ul>
      *     <li><code>true</code> - only return LEX Certified files</li>

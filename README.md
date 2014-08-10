@@ -36,6 +36,11 @@ Installation is easy using the Maven Central Repository. Just add the following 
 ##### v0.8
 * Further improved search filter documentation
 
+##### v0.9
+* Switched to v3 LEX API
+* Add support new search dependency results
+* Add support for full urls for images, etc.
+
 ### Documentation
 Documentation (Javadoc) is available at http://caspervg.net/public/sc4d-lex4j
 
