@@ -31,7 +31,9 @@ public class DownloadListItem {
     }
 
     /**
-     * Record associated with a {@link DownloadListItem}
+     * This class provides the Record associated with a {@link DownloadListItem}.
+     * It contains data about the download list item itself, but not about the file
+     * it refers to.
      */
     public class DownloadListItemRecord {
 
@@ -58,7 +60,9 @@ public class DownloadListItem {
     }
 
     /**
-     * File associated with a {@link DownloadListItem}
+     * This class provides the File associated with a {@link DownloadListItem}.
+     * It contains some data about the file/lot itself, but if you want more data, you will have to
+     * execute a separate {@link net.caspervg.lex4j.route.LotRoute#getLot} call.
      */
     public class DownloadListItemLot {
 
