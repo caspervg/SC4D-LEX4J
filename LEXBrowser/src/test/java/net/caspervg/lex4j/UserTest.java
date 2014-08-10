@@ -7,6 +7,7 @@ import net.caspervg.lex4j.bean.User;
 import net.caspervg.lex4j.route.UserRoute;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.restlet.resource.ResourceException;
 
@@ -73,6 +74,7 @@ public class UserTest {
     }
 
     @Test
+    @Ignore
     public void downloadListTest() {
         Auth auth = new Auth(prop.getProperty("username"), prop.getProperty("password"));
         UserRoute route = new UserRoute(auth);

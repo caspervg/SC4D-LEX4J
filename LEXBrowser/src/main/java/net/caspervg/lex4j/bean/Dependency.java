@@ -1,5 +1,8 @@
 package net.caspervg.lex4j.bean;
 
+/**
+ * This class provides a dependency
+ */
 public class Dependency {
 
     private boolean internal;

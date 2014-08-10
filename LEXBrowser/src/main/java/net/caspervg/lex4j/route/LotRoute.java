@@ -185,10 +185,20 @@ public class LotRoute {
 
     /**
      * Retrieves the dependency list for a lot/file
+     * @deprecated use {@link LotRoute#getDependencyList} instead
      * @param id ID of the lot/file
      * @return DependencyList
      */
     public DependencyList getDependency(int id) {
+        return getDependencyList(id);
+    }
+
+    /**
+     * Retrieves the dependency list for a lot/file
+     * @param id ID of the lot/file
+     * @return DependencyList
+     */
+    public DependencyList getDependencyList(int id) {
         ClientResource resource = new ClientResource(Route.DEPENDENCY.url(id));
 
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();

@@ -67,7 +67,10 @@ public class SearchRoute {
     }
 
     /**
-     * Performs the search operation based on filters that are currently active
+     * Performs the search operation based on filters that are currently active.
+     *
+     * Keep in mind that this method does not return all information about the resulting lots. For some detailed
+     * information, you may have to separately call {@link LotRoute#getLot} or {@link LotRoute#getDependencyList}.
      *
      * @return the files that were returned by the search operation
      */

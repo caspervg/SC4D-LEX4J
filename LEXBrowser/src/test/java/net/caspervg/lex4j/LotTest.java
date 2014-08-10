@@ -49,6 +49,20 @@ public class LotTest {
     }
 
     @Test
+    public void lotDependencyNullTest() {
+        LotRoute route = new LotRoute();
+        try {
+            Lot lot = route.getLot(2987);
+            Assert.assertNotNull(lot.getDependencyList());
+            Assert.assertNotNull(lot.getDependencyList().getList());
+            Assert.assertNotEquals(0, lot.getDependencyList().getCount());
+            Assert.assertNotEquals(0, lot.getDependencyList().getList().size());
+        } catch (ResourceException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    @Test
     public void lotAllTest() {
         LotRoute route = new LotRoute();
         List<Lot> lots = route.getLotList();
