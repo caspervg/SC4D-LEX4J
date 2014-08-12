@@ -3,10 +3,7 @@ package net.caspervg.lex4j;
 import junit.framework.Assert;
 import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.*;
-import net.caspervg.lex4j.route.Filter;
-import net.caspervg.lex4j.route.LotRoute;
-import net.caspervg.lex4j.route.SearchRoute;
-import net.caspervg.lex4j.route.UserRoute;
+import net.caspervg.lex4j.route.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.restlet.resource.ResourceException;
@@ -110,6 +107,29 @@ public class GenericTest {
         Assert.assertEquals("This is an extended download list item", listItems.get(0).showMessage());
     }
 
+    @Test
+    public void genericCategoryTest() {
+        CategoryRoute route = new CategoryRoute();
+
+        List<ExtendedCategory> categories = route.getBroadCategories(ExtendedCategory.class);
+        Assert.assertEquals("This is an extended category", categories.get(0).showMessage());
+
+        categories = route.getLEXCategories(ExtendedCategory.class);
+        Assert.assertEquals("This is an extended category", categories.get(0).showMessage());
+
+        categories = route.getLEXTypes(ExtendedCategory.class);
+        Assert.assertEquals("This is an extended category", categories.get(0).showMessage());
+
+        categories = route.getLotAuthors(ExtendedCategory.class);
+        Assert.assertEquals("This is an extended category", categories.get(0).showMessage());
+
+        categories = route.getLotGroups(ExtendedCategory.class);
+        Assert.assertEquals("This is an extended category", categories.get(0).showMessage());
+
+        ExtendedCategoryOverview overview = route.getCategories(ExtendedCategoryOverview.class);
+        Assert.assertEquals("This is an extended category overview", overview.showMessage());
+    }
+
     private class ExtendedLot extends Lot {
         public String showMessage() {
             return "This is an extended lot";
@@ -137,6 +157,18 @@ public class GenericTest {
     private class ExtendedDownloadListItem extends DownloadListItem {
         public String showMessage() {
             return "This is an extended download list item";
+        }
+    }
+
+    private class ExtendedCategory extends Category {
+        public String showMessage() {
+            return "This is an extended category" ;
+        }
+    }
+
+    private class ExtendedCategoryOverview extends CategoryOverview {
+        public String showMessage() {
+            return "This is an extended category overview" ;
         }
     }
 }
