@@ -4,6 +4,11 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/**
+ * Class that helps with Gson (de)serialisation of generic types
+ *
+ * @param <X> Type to deserialize
+ */
 public final class ParameterizedList<X> implements ParameterizedType {
     private Class<?> wrapped;
 
