@@ -55,13 +55,24 @@ public class LotRoute {
      * @return Lot
      */
     public Lot getLot(int id) {
+        return getLot(id, Lot.class);
+    }
+
+    /**
+     * Retrieve the lot/file
+     * @param id ID of the lot to be retrieved
+     * @param clazz Class to return
+     * @param <T> Type to return
+     * @return Lot
+     */
+    public <T extends Lot> T getLot(int id, Class<T> clazz) {
         ClientResource resource = new ClientResource(Route.LOT.url(id));
 
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
 
         try {
             Representation repr = resource.get();
-            return gson.fromJson(repr.getText(), Lot.class);
+            return gson.fromJson(repr.getText(), clazz);
         } catch (IOException e) {
             LEX4JLogger.log(Level.WARNING, "Could not retrieve lot correctly!");
             return null;
@@ -73,10 +84,20 @@ public class LotRoute {
      * @return List of lots/files
      */
     public List<Lot> getLotList() {
+       return getLotList(Lot.class);
+    }
+
+    /**
+     * Retrieve a list of lots/files
+     * @param clazz Class to return
+     * @param <T> Type to return
+     * @return List of lots/files
+     */
+    public <T extends Lot> List<T> getLotList(final Class<T> clazz) {
         ClientResource resource = new ClientResource(Route.ALL_LOT.url());
 
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
-        Type listType = new TypeToken<List<Lot>>() {
+        Type listType = new TypeToken<List<T>>() {
         }.getType();
 
         try {
@@ -148,10 +169,21 @@ public class LotRoute {
      * @return List of comments
      */
     public List<Comment> getComment(int id) {
+        return getComment(id, Comment.class);
+    }
+
+    /**
+     * Retries the list of comments for a lot/file
+     * @param id ID of the lot/file
+     * @param clazz Class to return
+     * @param <T> Type to return
+     * @return List of comments
+     */
+    public <T extends Comment> List<T> getComment(int id, Class<T> clazz) {
         ClientResource resource = new ClientResource(Route.GET_COMMENT.url(id));
 
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
-        Type listType = new TypeToken<List<Comment>>() {
+        Type listType = new TypeToken<List<T>>() {
         }.getType();
 
         try {
@@ -199,13 +231,17 @@ public class LotRoute {
      * @return DependencyList
      */
     public DependencyList getDependencyList(int id) {
+        return getDependencyList(id, DependencyList.class);
+    }
+
+    public <T extends DependencyList> T getDependencyList(int id, Class<T> clazz) {
         ClientResource resource = new ClientResource(Route.DEPENDENCY.url(id));
 
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
 
         try {
             Representation repr = resource.get();
-            return gson.fromJson(repr.getText(), DependencyList.class);
+            return gson.fromJson(repr.getText(), clazz);
         } catch (IOException ex) {
             LEX4JLogger.log(Level.WARNING, "Could not retrieve lot dependencies correctly!");
             return null;
