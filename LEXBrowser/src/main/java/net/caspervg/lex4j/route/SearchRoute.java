@@ -2,16 +2,15 @@ package net.caspervg.lex4j.route;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import net.caspervg.lex4j.bean.Lot;
 import net.caspervg.lex4j.log.LEX4JLogger;
+import net.caspervg.lex4j.reflection.ParameterizedList;
 import net.caspervg.lex4j.serializer.LEXDateSerializer;
 import org.restlet.data.Reference;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -72,21 +71,33 @@ public class SearchRoute {
      * Keep in mind that this method does not return all information about the resulting lots. For some detailed
      * information, you may have to separately call {@link LotRoute#getLot} or {@link LotRoute#getDependencyList}.
      *
-     * @return the files that were returned by the search operation
+     * @return the lots/files that were returned by the search operation
      */
     public List<Lot> doSearch() {
+        return doSearch(Lot.class);
+    }
+
+    /**
+     * Performs the search operation based on filters that are currently active.
+     *
+     * Keep in mind that this method does not return all information about the resulting lots. For some detailed
+     * information, you may have to separately call {@link LotRoute#getLot} or {@link LotRoute#getDependencyList}.
+     *
+     * @param clazz Class to return
+     * @param <T> Type to return
+     * @return the lots/files that were returned by the search operation
+     */
+    public <T extends Lot> List<T> doSearch(Class<T> clazz) {
         ClientResource resource = new ClientResource(Route.SEARCH.url());
         Reference reference = resource.getReference();
 
         Route.addParameters(reference, this.parameters);
 
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
-        Type listType = new TypeToken<List<Lot>>() {
-        }.getType();
 
         try {
             Representation repr = resource.get();
-            return gson.fromJson(repr.getText(), listType);
+            return gson.fromJson(repr.getText(), new ParameterizedList<T>(clazz));
         } catch (IOException ex) {
             LEX4JLogger.log(Level.WARNING, "Could not retrieve search results correctly!");
             return null;
