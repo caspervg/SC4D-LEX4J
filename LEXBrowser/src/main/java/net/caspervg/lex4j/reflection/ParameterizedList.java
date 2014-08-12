@@ -4,7 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class ParameterizedList<X> implements ParameterizedType {
+public final class ParameterizedList<X> implements ParameterizedType {
     private Class<?> wrapped;
 
     public ParameterizedList(Class<X> wrapped) {
