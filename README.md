@@ -11,7 +11,20 @@ Installation is easy using the Maven Central Repository. Just add the following 
   <dependency>
       <groupId>net.caspervg.lex4j</groupId>
       <artifactId>LEX4J</artifactId>
-      <version>0.8</version>
+      <version>0.9</version>
+  </dependency>
+  ...
+</dependencies>
+```
+
+Alternatively, you can use the latest in-development version:
+```xml
+<dependencies>
+  ...
+  <dependency>
+      <groupId>net.caspervg.lex4j</groupId>
+      <artifactId>LEX4J</artifactId>
+      <version>1.0-SNAPSHOT</version>
   </dependency>
   ...
 </dependencies>
