@@ -40,6 +40,7 @@ public class GenericTest {
         }
     }
 
+    @Test
     public void GenericLotListTest() {
         LotRoute route = new LotRoute();
         try {
@@ -53,6 +54,7 @@ public class GenericTest {
         }
     }
 
+    @Test
     public void GenericDepListTest() {
         LotRoute route = new LotRoute();
         try {

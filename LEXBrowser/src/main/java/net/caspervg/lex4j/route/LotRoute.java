@@ -2,13 +2,13 @@ package net.caspervg.lex4j.route;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.Comment;
 import net.caspervg.lex4j.bean.DependencyList;
 import net.caspervg.lex4j.bean.DependencyString;
 import net.caspervg.lex4j.bean.Lot;
 import net.caspervg.lex4j.log.LEX4JLogger;
+import net.caspervg.lex4j.reflection.ParameterizedList;
 import net.caspervg.lex4j.serializer.LEXDateSerializer;
 import org.restlet.data.Disposition;
 import org.restlet.data.Form;
@@ -20,7 +20,6 @@ import org.restlet.resource.ClientResource;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -97,12 +96,10 @@ public class LotRoute {
         ClientResource resource = new ClientResource(Route.ALL_LOT.url());
 
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
-        Type listType = new TypeToken<List<T>>() {
-        }.getType();
 
         try {
             Representation repr = resource.get();
-            return gson.fromJson(repr.getText(), listType);
+            return gson.fromJson(repr.getText(), new ParameterizedList<T>(clazz));
         } catch (IOException ex) {
             LEX4JLogger.log(Level.WARNING, "Could not retrieve lot list correctly!");
             return null;
@@ -169,7 +166,8 @@ public class LotRoute {
      * @return List of comments
      */
     public List<Comment> getComment(int id) {
-        return getComment(id, Comment.class);
+        List<Comment> comms = getComment(id, Comment.class);
+        return comms;
     }
 
     /**
@@ -179,16 +177,14 @@ public class LotRoute {
      * @param <T> Type to return
      * @return List of comments
      */
-    public <T extends Comment> List<T> getComment(int id, Class<T> clazz) {
+    public <T extends Comment> List<T> getComment(int id, final Class<T> clazz) {
         ClientResource resource = new ClientResource(Route.GET_COMMENT.url(id));
 
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
-        Type listType = new TypeToken<List<T>>() {
-        }.getType();
 
         try {
             String result = resource.get().getText();
-            return gson.fromJson(result, listType);
+            return gson.fromJson(result, new ParameterizedList<T>(clazz));
         } catch (IOException ex) {
             LEX4JLogger.log(Level.WARNING, "Could not retrieve lot comments correctly!");
             return null;
