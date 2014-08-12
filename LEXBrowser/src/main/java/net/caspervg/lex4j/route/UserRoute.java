@@ -2,12 +2,12 @@ package net.caspervg.lex4j.route;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.DownloadHistoryItem;
 import net.caspervg.lex4j.bean.DownloadListItem;
 import net.caspervg.lex4j.bean.User;
 import net.caspervg.lex4j.log.LEX4JLogger;
+import net.caspervg.lex4j.reflection.ParameterizedList;
 import net.caspervg.lex4j.serializer.LEXDateSerializer;
 import org.restlet.data.Form;
 import org.restlet.data.Reference;
@@ -15,7 +15,6 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +55,18 @@ public class UserRoute {
      * @custom.require Authentication
      */
     public User getUser() {
+        return getUser(User.class);
+    }
+
+    /**
+     * Returns the current user
+     *
+     * @param clazz Class to return
+     * @param <T> Type to return
+     * @return the current user
+     * @custom.require Authentication
+     */
+    public <T extends User> T getUser(Class<T> clazz) {
         ClientResource resource = new ClientResource(Route.ME.url());
         resource.setChallengeResponse(this.auth.toChallenge());
 
@@ -63,7 +74,7 @@ public class UserRoute {
 
         try {
             Representation repr = resource.get();
-            return gson.fromJson(repr.getText(), User.class);
+            return gson.fromJson(repr.getText(), clazz);
         } catch (IOException ex) {
             LEX4JLogger.log(Level.WARNING, "Could not retrieve user (me) correctly!");
             return null;
@@ -78,6 +89,19 @@ public class UserRoute {
      * @custom.require Authentication and Administrator
      */
     public User getUser(int id) {
+        return getUser(id, User.class);
+    }
+
+    /**
+     * Returns the user with the primary key
+     *
+     * @param id the primary key of the user
+     * @param clazz Class to return
+     * @param <T> Type to return
+     * @return the user
+     * @custom.require Authentication and Administrator
+     */
+    public <T extends User> T getUser(int id, Class<T> clazz) {
         ClientResource resource = new ClientResource(Route.USER.url(id));
         resource.setChallengeResponse(this.auth.toChallenge());
 
@@ -85,7 +109,7 @@ public class UserRoute {
 
         try {
             Representation repr = resource.get();
-            return gson.fromJson(repr.getText(), User.class);
+            return gson.fromJson(repr.getText(), clazz);
         } catch (IOException ex) {
             LEX4JLogger.log(Level.WARNING, "Could not retrieve user correctly!");
             return null;
@@ -103,6 +127,22 @@ public class UserRoute {
      * @custom.require Authentication and Administrator
      */
     public List<User> getUserList(boolean concise, int start, int amount) {
+        return getUserList(concise, start, amount, User.class);
+    }
+
+    /**
+     * Returns all users
+     *
+     * @param concise <code>true</code> if you only want the primary key and the username;
+     *                <code>false</code> otherwise
+     * @param start start number of results
+     * @param amount number of results to return
+     * @param clazz Class to return
+     * @param <T> Type to return
+     * @return all users
+     * @custom.require Authentication and Administrator
+     */
+    public <T extends User> List<T> getUserList(boolean concise, int start, int amount, Class<T> clazz) {
         ClientResource resource = new ClientResource(Route.ALL_USER.url());
         Reference ref = resource.getReference();
 
@@ -115,12 +155,10 @@ public class UserRoute {
 
         resource.setChallengeResponse(this.auth.toChallenge());
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
-        Type listType = new TypeToken<List<User>>() {
-        }.getType();
 
         try {
             Representation repr = resource.get();
-            return gson.fromJson(repr.getText(), listType);
+            return gson.fromJson(repr.getText(), new ParameterizedList<T>(clazz));
         } catch (IOException ex) {
             LEX4JLogger.log(Level.WARNING, "Could not retrieve user list correctly!");
             return null;
@@ -134,16 +172,26 @@ public class UserRoute {
      * @custom.require Authentication
      */
     public List<DownloadListItem> getDownloadList() {
+        return getDownloadList(DownloadListItem.class);
+    }
+
+    /**
+     * Returns the download list of the current user
+     *
+     * @param clazz Class to return
+     * @param <T> Type to return
+     * @return the download list of the current user
+     * @custom.require Authentication
+     */
+    public <T extends DownloadListItem> List<T> getDownloadList(Class<T> clazz) {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_LIST.url());
         resource.setChallengeResponse(this.auth.toChallenge());
 
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
-        Type listType = new TypeToken<List<DownloadListItem>>() {
-        }.getType();
 
         try {
             Representation repr = resource.get();
-            return gson.fromJson(repr.getText(), listType);
+            return gson.fromJson(repr.getText(), new ParameterizedList<T>(clazz));
         } catch (IOException ex) {
             LEX4JLogger.log(Level.WARNING, "Could not retrieve download list correctly!");
             return null;
@@ -157,16 +205,26 @@ public class UserRoute {
      * @custom.require Authentication
      */
     public List<DownloadHistoryItem> getDownloadHistory() {
+        return getDownloadHistory(DownloadHistoryItem.class);
+    }
+
+    /**
+     * Returns the download history of the current user
+     *
+     * @param clazz Class to return
+     * @param <T> Type to return
+     * @return the download list of the current user
+     * @custom.require Authentication
+     */
+    public <T extends DownloadHistoryItem> List<T> getDownloadHistory(Class<T> clazz) {
         ClientResource resource = new ClientResource(Route.DOWNLOAD_HISTORY.url());
         resource.setChallengeResponse(this.auth.toChallenge());
 
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
-        Type listType = new TypeToken<List<DownloadHistoryItem>>() {
-        }.getType();
 
         try {
             String result = resource.get().getText();
-            return gson.fromJson(result, listType);
+            return gson.fromJson(result, new ParameterizedList<T>(clazz));
         } catch (IOException e) {
             LEX4JLogger.log(Level.WARNING, "Could not retrieve download history correctly!");
             return null;

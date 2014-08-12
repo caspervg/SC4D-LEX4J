@@ -1,11 +1,12 @@
 package net.caspervg.lex4j;
 
 import junit.framework.Assert;
-import net.caspervg.lex4j.bean.DependencyList;
-import net.caspervg.lex4j.bean.Lot;
+import net.caspervg.lex4j.auth.Auth;
+import net.caspervg.lex4j.bean.*;
 import net.caspervg.lex4j.route.Filter;
 import net.caspervg.lex4j.route.LotRoute;
 import net.caspervg.lex4j.route.SearchRoute;
+import net.caspervg.lex4j.route.UserRoute;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.restlet.resource.ResourceException;
@@ -83,6 +84,32 @@ public class GenericTest {
         Assert.assertEquals("This is an extended lot", lots.get(0).showMessage());
     }
 
+    @Test
+    public void genericUserTest() {
+        Auth auth = new Auth(prop.getProperty("username"), prop.getProperty("password"));
+        UserRoute route = new UserRoute(auth);
+
+        ExtendedUser user = route.getUser(ExtendedUser.class);
+        Assert.assertEquals("caspervg", user.getUsername());
+        Assert.assertEquals("This is an extended user", user.showMessage());
+
+        user = route.getUser(1, ExtendedUser.class);
+        Assert.assertEquals("ADMIN", user.getUsername());
+        Assert.assertEquals("This is an extended user", user.showMessage());
+    }
+
+    @Test
+    public void genericDownloadHistoryListTest() {
+        Auth auth = new Auth(prop.getProperty("username"), prop.getProperty("password"));
+        UserRoute route = new UserRoute(auth);
+
+        List<ExtendedDownloadHistoryItem> historyItems = route.getDownloadHistory(ExtendedDownloadHistoryItem.class);
+        Assert.assertEquals("This is an extended download history item", historyItems.get(0).showMessage());
+
+        List<ExtendedDownloadListItem> listItems = route.getDownloadList(ExtendedDownloadListItem.class);
+        Assert.assertEquals("This is an extended download list item", listItems.get(0).showMessage());
+    }
+
     private class ExtendedLot extends Lot {
         public String showMessage() {
             return "This is an extended lot";
@@ -92,6 +119,24 @@ public class GenericTest {
     private class ExtendedDependencyList extends DependencyList {
         public String showMessage() {
             return "This is an extended dependency list";
+        }
+    }
+
+    private class ExtendedUser extends User {
+        public String showMessage() {
+            return "This is an extended user";
+        }
+    }
+
+    private class ExtendedDownloadHistoryItem extends DownloadHistoryItem {
+        public String showMessage() {
+            return "This is an extended download history item";
+        }
+    }
+
+    private class ExtendedDownloadListItem extends DownloadListItem {
+        public String showMessage() {
+            return "This is an extended download list item";
         }
     }
 }
