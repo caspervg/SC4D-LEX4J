@@ -9,8 +9,8 @@ import java.util.Date;
  */
 public class DownloadListItem {
 
-    private DownloadListItemRecord record;
-    private DownloadListItemLot lot;
+    protected DownloadListItemRecord record;
+    protected DownloadListItemLot lot;
 
     /**
      * Returns the record of this download list item
@@ -37,7 +37,7 @@ public class DownloadListItem {
      */
     public class DownloadListItemRecord {
 
-        private int id;
+        protected int id;
 
         /**
          * Returns the ID of this record
@@ -66,12 +66,12 @@ public class DownloadListItem {
      */
     public class DownloadListItemLot {
 
-        private int id;
-        private String name;
+        protected int id;
+        protected String name;
         @SerializedName("update_date")
-        private Date updated;
-        private String version;
-        private String author;
+        protected Date updated;
+        protected String version;
+        protected String author;
 
         /**
          * Returns the ID of this file

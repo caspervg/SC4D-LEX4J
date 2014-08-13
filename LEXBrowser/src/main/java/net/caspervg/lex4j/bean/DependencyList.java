@@ -7,9 +7,9 @@ import java.util.List;
  */
 public class DependencyList {
 
-    private String status;
-    private int count;
-    private List<Dependency> list;
+    protected String status;
+    protected int count;
+    protected List<Dependency> list;
 
     /**
      * Returns <code>"ok"</code> if the dependency status is available

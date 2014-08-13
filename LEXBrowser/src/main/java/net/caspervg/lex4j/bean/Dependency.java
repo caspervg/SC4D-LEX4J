@@ -5,11 +5,11 @@ package net.caspervg.lex4j.bean;
  */
 public class Dependency {
 
-    private boolean internal;
-    private String link;
-    private String name;
-    private int id;
-    private DependencyStatus status;
+    protected boolean internal;
+    protected String link;
+    protected String name;
+    protected int id;
+    protected DependencyStatus status;
 
     /**
      * Returns <code>true</code> if the dependency is hosted on the LEX

@@ -6,7 +6,7 @@ package net.caspervg.lex4j.bean;
  */
 public class DependencyString {
 
-    private String dependency;
+    protected String dependency;
 
     /**
      * Returns the dependency string

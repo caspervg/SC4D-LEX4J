@@ -5,7 +5,7 @@ package net.caspervg.lex4j.bean;
  */
 public class TypeCategory extends Category {
 
-    private String description;
+    protected String description;
 
     /**
      * Returns the description of this type category

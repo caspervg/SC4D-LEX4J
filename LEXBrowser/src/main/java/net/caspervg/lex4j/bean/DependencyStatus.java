@@ -7,13 +7,13 @@ import com.google.gson.annotations.SerializedName;
  */
 public class DependencyStatus {
 
-    private boolean ok;
-    private boolean deleted;
+    protected boolean ok;
+    protected boolean deleted;
     @SerializedName("superceded")
-    private boolean superseded;
+    protected boolean superseded;
     @SerializedName("superceded_by")
-    private int supersededBy;
-    private boolean locked;
+    protected int supersededBy;
+    protected boolean locked;
 
     /**
      * Returns <code>true</code> if this dependency is not deleted, not superseded and not locked

@@ -10,29 +10,29 @@ import java.util.HashMap;
  */
 public class Lot {
 
-    private int id;
-    private String name;
-    private String version;
+    protected int id;
+    protected String name;
+    protected String version;
     @SerializedName("num_downloads")
-    private int downloads;
-    private String author;
+    protected int downloads;
+    protected String author;
     @SerializedName("is_exclusive")
-    private boolean exclusive;
+    protected boolean exclusive;
     @SerializedName("maxis_category")
-    private String broadCategory;
-    private String description;
-    private HashMap<String,String> images;
-    private String link;
+    protected String broadCategory;
+    protected String description;
+    protected HashMap<String,String> images;
+    protected String link;
     @SerializedName("is_certified")
-    private boolean certified;
+    protected boolean certified;
     @SerializedName("is_active")
-    private boolean active;
+    protected boolean active;
     @SerializedName("upload_date")
-    private Date uploaded;
+    protected Date uploaded;
     @SerializedName("update_date")
-    private Date updated;
+    protected Date updated;
     @SerializedName("dependencies")
-    private DependencyList dependencyList;
+    protected DependencyList dependencyList;
 
     /**
      * Returns the ID of this file

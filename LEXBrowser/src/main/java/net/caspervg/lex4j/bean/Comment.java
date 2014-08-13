@@ -9,14 +9,14 @@ import java.util.Date;
  */
 public class Comment {
 
-    private int id;
-    private String user;
-    private String text;
-    private Date date;
+    protected int id;
+    protected String user;
+    protected String text;
+    protected Date date;
     @SerializedName("by_author")
-    private boolean byAuthor;
+    protected boolean byAuthor;
     @SerializedName("by_admin")
-    private boolean byAdmin;
+    protected boolean byAdmin;
 
     /**
      * Returns the ID of this comment

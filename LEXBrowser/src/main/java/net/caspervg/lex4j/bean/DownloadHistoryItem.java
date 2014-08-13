@@ -9,8 +9,8 @@ import java.util.Date;
  */
 public class DownloadHistoryItem {
 
-    private DownloadHistoryItemRecord record;
-    private DownloadHistoryItemLot lot;
+    protected DownloadHistoryItemRecord record;
+    protected DownloadHistoryItemLot lot;
 
     /**
      * Returns the record of this download history item
@@ -37,13 +37,13 @@ public class DownloadHistoryItem {
      */
     public class DownloadHistoryItemRecord {
 
-        private int id;
+        protected int id;
         @SerializedName("last_downloaded")
-        private Date lastDownloaded;
+        protected Date lastDownloaded;
         @SerializedName("last_version")
-        private String lastVersion;
+        protected String lastVersion;
         @SerializedName("download_count")
-        private int timesDownloaded;
+        protected int timesDownloaded;
 
         /**
          * Returns the ID of this record
@@ -99,12 +99,12 @@ public class DownloadHistoryItem {
      */
     public class DownloadHistoryItemLot {
 
-        private int id;
-        private String name;
+        protected int id;
+        protected String name;
         @SerializedName("update_date")
-        private Date updated;
-        private String version;
-        private String author;
+        protected Date updated;
+        protected String version;
+        protected String author;
 
         /**
          * Returns the ID of this file

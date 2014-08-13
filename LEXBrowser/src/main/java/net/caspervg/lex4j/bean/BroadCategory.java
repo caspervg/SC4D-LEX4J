@@ -5,7 +5,7 @@ package net.caspervg.lex4j.bean;
  */
 public class BroadCategory extends Category {
 
-    private String image;
+    protected String image;
 
     /**
      * Returns the url of the image associated with this broad category

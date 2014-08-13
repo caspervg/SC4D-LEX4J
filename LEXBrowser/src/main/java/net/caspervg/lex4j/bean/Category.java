@@ -5,8 +5,8 @@ package net.caspervg.lex4j.bean;
  */
 public class Category {
 
-    private int id;
-    private String name;
+    protected int id;
+    protected String name;
 
     /**
      * Returns the ID of this category

@@ -10,19 +10,19 @@ import java.util.List;
 public class CategoryOverview {
 
     @SerializedName("broad_category")
-    private List<BroadCategory> broadCategories;
+    protected List<BroadCategory> broadCategories;
 
     @SerializedName("lex_category")
-    private List<Category> lexCategories;
+    protected List<Category> lexCategories;
 
     @SerializedName("lex_type")
-    private List<TypeCategory> lexTypeCategories;
+    protected List<TypeCategory> lexTypeCategories;
 
     @SerializedName("group")
-    private List<Category> lotGroups;
+    protected List<Category> lotGroups;
 
     @SerializedName("author")
-    private List<Category> lotAuthors;
+    protected List<Category> lotAuthors;
 
     /**
      * Returns the broad categories

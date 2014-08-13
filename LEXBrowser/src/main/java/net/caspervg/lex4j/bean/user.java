@@ -9,37 +9,37 @@ import java.util.Date;
  */
 public class User {
 
-    private int id;
-    private String fullname;
-    private String username;
-    private Date registered;
-    private Date lastLogin;
+    protected int id;
+    protected String fullname;
+    protected String username;
+    protected Date registered;
+    protected Date lastLogin;
 
     @SerializedName("user_level")
-    private int userLevel;
+    protected int userLevel;
 
-    private String email;
+    protected String email;
     @SerializedName("login_count")
 
-    private int loginCount;
+    protected int loginCount;
 
     @SerializedName("is_active")
-    private boolean active;
+    protected boolean active;
 
     @SerializedName("is_donator")
-    private boolean donator;
+    protected boolean donator;
 
     @SerializedName("is_rater")
-    private boolean rater;
+    protected boolean rater;
 
     @SerializedName("is_uploader")
-    private boolean uploader;
+    protected boolean uploader;
 
     @SerializedName("is_author")
-    private boolean author;
+    protected boolean author;
 
     @SerializedName("is_admin")
-    private boolean admin;
+    protected boolean admin;
 
     public User() {
         /*
@@ -188,6 +188,8 @@ public class User {
     public boolean isAdmin() {
         return admin;
     }
+
+
 
     /**
      * Returns the String representation of this file
