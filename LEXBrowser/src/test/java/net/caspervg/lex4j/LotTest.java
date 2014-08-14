@@ -38,6 +38,9 @@ public class LotTest {
         try {
             Lot lot = route.getLot(950);
             Assert.assertEquals(lot.getName(), "CAM Commercial Offices BSC");
+
+            lot = route.getLot(3129);
+            Assert.assertEquals(lot.getFilesize(), "1.30 MB");
         } catch (ResourceException ex) {
             Status stat = ex.getStatus();
             System.out.println(stat.getDescription());

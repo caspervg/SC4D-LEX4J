@@ -31,6 +31,7 @@ public class Lot {
     protected Date uploaded;
     @SerializedName("update_date")
     protected Date updated;
+    protected String filesize;
     @SerializedName("dependencies")
     protected DependencyList dependencyList;
 
@@ -166,6 +167,17 @@ public class Lot {
      */
     public Date getUpdated() {
         return updated;
+    }
+
+    /**
+     * Returns the filesize of this file
+     * The size is presented in a rounded, human-readable form.
+     * For example, instead of <code>"1.300.128 bytes"</code>, it will return <code>"1.30 MB".</code>
+     *
+     * @return the filesize of this file
+     */
+    public String getFilesize() {
+        return filesize;
     }
 
     /**
