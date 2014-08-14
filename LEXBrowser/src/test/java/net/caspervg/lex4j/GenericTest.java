@@ -22,7 +22,7 @@ public class GenericTest {
     public static void setUpClass() {
         try {
             // If you want to run these tests, place a auth.properties file with your username and password in a directory.
-            prop.load(new FileInputStream(new File("C:\\Users\\Gebruiker\\IdeaProjects\\SC4D-LEX4J\\LEXBrowser\\auth.properties")));
+            prop.load(ClassLoader.getSystemResourceAsStream("auth.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
