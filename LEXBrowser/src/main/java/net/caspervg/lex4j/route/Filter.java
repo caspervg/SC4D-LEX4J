@@ -1,5 +1,7 @@
 package net.caspervg.lex4j.route;
 
+import java.util.Arrays;
+
 /**
  * Provides several filters used to send search requests to the LEX
  *
@@ -9,11 +11,21 @@ public enum Filter {
     /**
      * Result to start at. Requires an Integer parameter.
      */
-    START("start", Integer.class),
+    START("start", new FilterValidator() {
+        @Override
+        public boolean validateParameter(Object o) {
+            return (o instanceof Integer);
+        }
+    }),
     /**
      * Number of results to return. Requires an Integer parameter.
      */
-    AMOUNT("amount", Integer.class),
+    AMOUNT("amount", new FilterValidator() {
+        @Override
+        public boolean validateParameter(Object o) {
+            return (o instanceof Integer);
+        }
+    }),
     /**
      * Ordering of the results. Requires a String parameter.
      * <ul>
@@ -23,7 +35,13 @@ public enum Filter {
      *     <li><code>"recent"</code> - order by release date</li>
      * </ul>
      */
-    ORDER_BY("order_by", String.class),
+    ORDER_BY("order_by", new FilterValidator() {
+        @Override
+        public boolean validateParameter(Object o) {
+            String[] possibilities = {"download", "popular", "update", "recent"};
+            return o instanceof String && Arrays.asList(possibilities).contains(o);
+        }
+    }),
     /**
      * Ascending or descending. Requires a String parameter.
      * <ul>
@@ -31,7 +49,13 @@ public enum Filter {
      *     <li><code>"desc"</code> - order descending</li>
      * </ul>
      */
-    ORDER("order", String.class),
+    ORDER("order", new FilterValidator() {
+        @Override
+        public boolean validateParameter(Object o) {
+            String[] possibilities = {"asc", "desc"};
+            return o instanceof String && Arrays.asList(possibilities).contains(o);
+        }
+    }),
     /**
      * Only return ID and name, no other information. Requires a Boolean parameter.
      * <ul>
@@ -39,7 +63,12 @@ public enum Filter {
      *     <li><code>false</code> - return all information</li>
      * </ul>
      */
-    CONCISE("concise", Boolean.class),
+    CONCISE("concise", new FilterValidator() {
+        @Override
+        public boolean validateParameter(Object o) {
+            return o instanceof Boolean;
+        }
+    }),
     /**
      * Filter by author of the file. Requires an Integer parameter (user id of the author).
      */
@@ -101,16 +130,22 @@ public enum Filter {
     EXCLUDE_LOCKED("exclude_locked", Boolean.class);
 
     private String representation;
-    private Class clazz;
+    private Class[] clazz;
+    private FilterValidator validator;
 
     /**
      * Constructs a new filter with it's string representation
      *
      * @param representation String representation
      */
-    Filter(String representation, Class clazz) {
+    Filter(String representation, Class... clazz) {
         this.representation = representation;
         this.clazz = clazz;
+    }
+
+    Filter(String representation, FilterValidator validator) {
+        this.representation = representation;
+        this.validator = validator;
     }
 
     /**
@@ -123,11 +158,22 @@ public enum Filter {
     }
 
     /**
-     * Returns the Parameter Class of this Filter
+     * Returns the first parameter class of this Filter
      *
-     * @return the Parameter Class of this Filter
+     * @deprecated use @link{Filter#getParameterClasses} instead
+     * @return the first parameter class of this Filter
      */
     public Class getParameterClass() {
+        return this.clazz[0];
+    }
+
+    /**
+     * Returns all parameter classes for this Filter
+     *
+     * @since v2.0
+     * @return all parameter classes for this Filter
+     */
+    public Class[] getParameterClasses() {
         return this.clazz;
     }
 }
