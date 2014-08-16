@@ -4,6 +4,7 @@ import junit.framework.Assert;
 import net.caspervg.lex4j.bean.BroadCategory;
 import net.caspervg.lex4j.bean.CategoryOverview;
 import net.caspervg.lex4j.bean.Lot;
+import net.caspervg.lex4j.bean.User;
 import net.caspervg.lex4j.route.CategoryRoute;
 import net.caspervg.lex4j.route.Filter;
 import net.caspervg.lex4j.route.FilterParameterException;
@@ -64,6 +65,13 @@ public class SearchTest {
         route.addFilter(Filter.AMOUNT, "100");
     }
 
+    // Invalid search test 2
+    @Test(expected = FilterParameterException.class)
+    public void searchInvalidTest2() {
+        SearchRoute route = new SearchRoute();
+        route.addFilter(Filter.CONCISE, new User());
+    }
+
     @Test
     public void searchFullDependencyTest() {
         SearchRoute route = new SearchRoute();
@@ -110,6 +118,21 @@ public class SearchTest {
         Assert.assertEquals(731, depLot.getDependencyList().getList().get(0).getId());
         Assert.assertEquals("N/A", depLot.getDependencyList().getList().get(0).getName());
         Assert.assertNull(depLot.getDependencyList().getList().get(0).getStatus());
+    }
+
+    @Test
+    public void filterByObjectTest() {
+        CategoryRoute categoryRoute = new CategoryRoute();
+        CategoryOverview overview = categoryRoute.getCategories();
+
+        SearchRoute searchRoute = new SearchRoute();
+
+        // None of these should throw FilterParameterExceptions
+        searchRoute.addFilter(Filter.BROAD_CATEGORY, overview.getBroadCategories().get(0));
+        searchRoute.addFilter(Filter.LEX_TYPE, overview.getLEXTypes().get(0));
+        searchRoute.addFilter(Filter.LEX_CATEGORY, overview.getLEXCategories().get(0));
+        searchRoute.addFilter(Filter.CREATOR, overview.getLEXCategories().get(0));
+        searchRoute.addFilter(Filter.GROUP, overview.getLotGroups().get(0));
     }
 
 }

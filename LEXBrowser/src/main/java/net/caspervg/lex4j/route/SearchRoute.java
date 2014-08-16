@@ -41,7 +41,7 @@ public class SearchRoute {
      */
     public void addFilter(Filter filter, Object value) {
         if (filter.validateParameter(value)) {
-           parameters.put(filter.repr(), value);
+           parameters.put(filter.repr(), filter.handleParameter(value));
         } else {
             String msg = "You need to supply the correct parameter for the " +
                     filter + " filter.";

@@ -14,7 +14,9 @@ import java.util.Arrays;
  */
 public enum Filter {
     /**
-     * Result to start at. Requires an Integer parameter.
+     * Result to start at.
+     *
+     * Acceptable parameter types: Integer
      */
     START("start", new FilterValidator() {
         @Override
@@ -23,7 +25,9 @@ public enum Filter {
         }
     }),
     /**
-     * Number of results to return. Requires an Integer parameter.
+     * Number of results to return.
+     *
+     * Acceptable parameter types: Integer
      */
     AMOUNT("amount", new FilterValidator() {
         @Override
@@ -32,7 +36,9 @@ public enum Filter {
         }
     }),
     /**
-     * Ordering of the results. Requires a String parameter.
+     * Ordering of the results.
+     *
+     * Acceptable parameter types: String
      * <ul>
      *     <li><code>"download"</code> - order by number of downloads</li>
      *     <li><code>"popular"</code> - order by number of downloads</li>
@@ -48,7 +54,9 @@ public enum Filter {
         }
     }),
     /**
-     * Ascending or descending. Requires a String parameter.
+     * Ascending or descending.
+     *
+     * Acceptable parameter types: String
      * <ul>
      *     <li><code>"asc"</code> - order ascending</li>
      *     <li><code>"desc"</code> - order descending</li>
@@ -62,7 +70,9 @@ public enum Filter {
         }
     }),
     /**
-     * Only return ID and name, no other information. Requires a Boolean parameter.
+     * Only return ID and name, no other information.
+     *
+     * Acceptable parameter types: Boolean
      * <ul>
      *     <li><code>true</code> - return concise information (ID and name only)</li>
      *     <li><code>false</code> - return all information</li>
@@ -75,43 +85,90 @@ public enum Filter {
         }
     }),
     /**
-     * Filter by author of the file. Requires an Integer parameter (user id of the author).
+     * Filter by author of the file.
+     *
+     * Acceptable parameter types: Integer, {@link net.caspervg.lex4j.bean.User} and {@link net.caspervg.lex4j.bean.Category}
      */
     CREATOR("creator", new FilterValidator() {
         @Override
         public boolean validateParameter(Object o) {
-            return o instanceof Integer || o instanceof User;
+            return o instanceof Integer || o instanceof User || o instanceof Category;
+        }
+    }, new ParameterHandler() {
+        @Override
+        public Object handleParameter(Object o) {
+            if (o instanceof Integer) return o;
+            if (o instanceof User) return ((User) o).getId();
+            if (o instanceof Category) return ((Category) o).getId();
+
+            // This shouldn't happen, parameters are validated first!
+            return null;
         }
     }),
     /**
-     * Filter by broad category of the file. Requires a String parameter (name of the broad category).
+     * Filter by broad category of the file.
+     *
+     * Acceptable parameter types: Integer and {@link net.caspervg.lex4j.bean.BroadCategory}
      */
     BROAD_CATEGORY("broad_category", new FilterValidator() {
         @Override
         public boolean validateParameter(Object o) {
             return o instanceof String || o instanceof BroadCategory;
         }
+    }, new ParameterHandler() {
+        @Override
+        public Object handleParameter(Object o) {
+            if (o instanceof String) return o;
+            if (o instanceof BroadCategory) return ((BroadCategory) o).getImage();
+
+            // This shouldn't happen, parameters are validated first
+            return null;
+        }
     }),
     /**
-     * Filter by LEX category of the file. Requires an Integer parameter (category id of the category).
+     * Filter by LEX category of the file.
+     *
+     * Acceptable parameter types: Integer and {@link net.caspervg.lex4j.bean.Category}
      */
     LEX_CATEGORY("lex_category", new FilterValidator() {
         @Override
         public boolean validateParameter(Object o) {
             return o instanceof Integer || o instanceof Category;
         }
+    }, new ParameterHandler() {
+        @Override
+        public Object handleParameter(Object o) {
+            if (o instanceof Integer) return o;
+            if (o instanceof Category) return ((Category) o).getId();
+
+            // This shouldn't happen, parameters are validated first!
+            return null;
+        }
     }),
     /**
-     * Filter by LEX type of the file. Requires an Integer parameter (type id of the category).
+     * Filter by LEX type of the file.
+     *
+     * Acceptable parameter types: Integer and {@link net.caspervg.lex4j.bean.TypeCategory}
      */
     LEX_TYPE("lex_type", new FilterValidator() {
         @Override
         public boolean validateParameter(Object o) {
             return o instanceof Integer || o instanceof TypeCategory;
         }
+    }, new ParameterHandler() {
+        @Override
+        public Object handleParameter(Object o) {
+            if (o instanceof Integer) return o;
+            if (o instanceof Category) return ((TypeCategory) o).getId();
+
+            // This shouldn't happen, parameters are validated first!
+            return null;
+        }
     }),
     /**
-     * Filter by broad type of the file (a very rough approach). Requires a String parameter.
+     * Filter by broad type of the file (a very rough approach).
+     *
+     * Acceptable parameter types: String
      * <ul>
      *     <li><code>"lotbat"</code> - LOTs and BATs</li>
      *     <li><code>"dependency"</code> - Dependencies</li>
@@ -128,16 +185,29 @@ public enum Filter {
         }
     }),
     /**
-     * Filter by lot group of the file. Requires an Integer parameter (group id of the group).
+     * Filter by lot group of the file.
+     *
+     * Acceptable parameter types: Integer, {@link net.caspervg.lex4j.bean.Category}
      */
     GROUP("group", new FilterValidator() {
         @Override
         public boolean validateParameter(Object o) {
             return o instanceof Integer || o instanceof Category;
         }
+    }, new ParameterHandler() {
+        @Override
+        public Object handleParameter(Object o) {
+            if (o instanceof Integer) return o;
+            if (o instanceof Category) return ((Category) o).getId();
+
+            // This shouldn't happen, parameters are validated first!
+            return null;
+        }
     }),
     /**
-     * Filter by (a part of) the title of the file. Requires a String parameter (text to search).
+     * Filter by (a part of) the title of the file.
+     *
+     * Acceptable parameter types: String
      */
     TITLE("query", new FilterValidator() {
         @Override
@@ -146,7 +216,9 @@ public enum Filter {
         }
     }),
     /**
-     * Add lists of dependencies to each search result. By default not active. Requires a String parameter.
+     * Add lists of dependencies to each search result. By default not active.
+     *
+     * Acceptable parameter types: String
      * <ul>
      *     <li><code>"full"</code> - Full list of dependencies, similar to {@link LotRoute#getDependencyList(int)}</li>
      *     <li><code>"concise"</code> - Concise list of dependencies, only IDs for internal dependencies</li>
@@ -160,7 +232,9 @@ public enum Filter {
         }
     }),
     /**
-     * Exclude results that are not LEX Certified. Requires a Boolean parameter.
+     * Exclude results that are not LEX Certified.
+     *
+     * Acceptable parameter types: Boolean
      * <ul>
      *     <li><code>true</code> - only return LEX Certified files</li>
      *     <li><code>false</code> - return all files</li>
@@ -173,7 +247,9 @@ public enum Filter {
         }
     }),
     /**
-     * Exclude results that are locked (not downloadable). Requires a Boolean parameter.
+     * Exclude results that are locked (not downloadable).
+     *
+     * Acceptable parameter types: Boolean
      * <ul>
      *     <li><code>true</code> - only return active (not locked) files</li>
      *     <li><code>false</code> - return all files</li>
@@ -188,6 +264,7 @@ public enum Filter {
 
     private String representation;
     private FilterValidator validator;
+    private ParameterHandler handler;
 
     /**
      * Constructs a new filter with a string representation and a parameter validator
@@ -198,6 +275,25 @@ public enum Filter {
     Filter(String representation, FilterValidator validator) {
         this.representation = representation;
         this.validator = validator;
+
+        // Use default handler if none is supplied. Basically this just returns the input
+        this.handler = new ParameterHandler() {
+            @Override
+            public Object handleParameter(Object o) {
+                return o;
+            }
+        };
+    }
+
+    /**
+     * Constructs a new filter with a string representation, a parameter validator and a parameter handler
+     *
+     * @param representation String representation
+     * @param validator parameter validator
+     */
+    Filter(String representation, FilterValidator validator, ParameterHandler handler) {
+        this(representation, validator);
+        this.handler = handler;
     }
 
     /**
@@ -216,7 +312,17 @@ public enum Filter {
      * @return <code>true</code> if the object was successfully validated;
      *         <code>false</code> otherwise
      */
-    public boolean validateParameter(Object o) {
+    protected boolean validateParameter(Object o) {
         return validator.validateParameter(o);
+    }
+
+    /**
+     * Handles a certain parameter to produce the correct input date for this Filter
+     *
+     * @param o Object to handle
+     * @return the handled parameter
+     */
+    protected Object handleParameter(Object o) {
+        return handler.handleParameter(o);
     }
 }
