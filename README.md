@@ -58,7 +58,7 @@ Alternatively, you can use the latest in-development version:
 * Added generic methods that can return any Class extending one of the LEX API beans. This is useful if you want to add extra functionality to for example the User class, but still want easy JSON deserialisation.
 
 ##### v1.1
-* Made fields in all beans ```java protected``` instead of ```java private``` so that overriding classes can edit them easily, as there are no setters.
+* Made fields in all beans ```protected``` instead of ```private``` so that overriding classes can edit them easily, as there are no setters.
 
 ### Documentation
 Documentation (Javadoc) is available at http://caspervg.net/public/sc4d-lex4j
