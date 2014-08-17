@@ -11,7 +11,7 @@ Installation is easy using the Maven Central Repository. Just add the following 
   <dependency>
       <groupId>net.caspervg.lex4j</groupId>
       <artifactId>LEX4J</artifactId>
-      <version>0.9</version>
+      <version>1.1</version>
   </dependency>
   ...
 </dependencies>
@@ -24,7 +24,7 @@ Alternatively, you can use the latest in-development version:
   <dependency>
       <groupId>net.caspervg.lex4j</groupId>
       <artifactId>LEX4J</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>2.0-SNAPSHOT</version>
   </dependency>
   ...
 </dependencies>
@@ -53,6 +53,12 @@ Alternatively, you can use the latest in-development version:
 * Switched to v3 LEX API
 * Add support new search dependency results
 * Add support for full urls for images, etc.
+
+##### v1.0
+* Added generic methods that can return any Class extending one of the LEX API beans. This is useful if you want to add extra functionality to for example the User class, but still want easy JSON deserialisation.
+
+##### v1.1
+* Made fields in all beans ```java protected``` instead of ```java private``` so that overriding classes can edit them easily, as there are no setters.
 
 ### Documentation
 Documentation (Javadoc) is available at http://caspervg.net/public/sc4d-lex4j
