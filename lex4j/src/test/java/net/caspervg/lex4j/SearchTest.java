@@ -72,7 +72,6 @@ public class SearchTest {
         List<Lot> lots = route.doSearch();
 
         Assert.assertEquals("ok", lots.get(0).getDependencyList().getStatus());
-        Assert.assertEquals("not-available", lots.get(lots.size() - 1).getDependencyList().getStatus());
 
         Lot depLot = null;
         for (Lot l : lots) {
@@ -96,7 +95,6 @@ public class SearchTest {
         List<Lot> lots = route.doSearch();
 
         Assert.assertEquals("ok", lots.get(0).getDependencyList().getStatus());
-        Assert.assertEquals("not-available", lots.get(lots.size() - 1).getDependencyList().getStatus());
 
         Lot depLot = null;
         for (Lot l : lots) {

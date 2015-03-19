@@ -10,8 +10,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.restlet.resource.ResourceException;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
@@ -78,7 +76,7 @@ public class UserTest {
         UserRoute route = new UserRoute(auth);
         try {
             List<DownloadListItem> dlList = route.getDownloadList();
-            Assert.assertEquals(dlList.get(0).getLot().getId(), 3083);
+            Assert.assertEquals(dlList.get(0).getLot().getId(), 670);
         } catch (ResourceException ex) {
             System.out.println(ex.getStatus());
         }
