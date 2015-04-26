@@ -30,6 +30,8 @@ Alternatively, you can use the latest in-development version:
 </dependencies>
 ```
 
+If you run the tests, make sure to rename auth_example.properties to auth.properties and fill in a username.
+
 ### Changelog
 ##### v0.5
 * Initial release
