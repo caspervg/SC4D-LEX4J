@@ -9,7 +9,7 @@
     <version>1.1</version>
 
     <name>SC4Devotion LEX4J</name>
-    <description>A library that be used to send requests to the SC4Devotion Lot Exchange API</description>
+    <description>A Java library that be used to send requests to the SC4Devotion Lot Exchange API</description>
     <url>http://caspervg.net/public/sc4d-lex4j/</url>
 
     <licenses>
