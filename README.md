@@ -24,7 +24,7 @@ Alternatively, you can use the latest in-development version:
   <dependency>
       <groupId>net.caspervg.lex4j</groupId>
       <artifactId>LEX4J</artifactId>
-      <version>2.0</version>
+      <version>2.0-SNAPSHOT</version>
   </dependency>
   ...
 </dependencies>
