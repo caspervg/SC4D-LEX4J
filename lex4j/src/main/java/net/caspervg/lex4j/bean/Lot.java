@@ -1,9 +1,11 @@
 package net.caspervg.lex4j.bean;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class provides a file/lot
@@ -13,27 +15,31 @@ public class Lot {
     protected int id;
     protected String name;
     protected String version;
-    @SerializedName("num_downloads")
+    @JsonProperty("num_downloads")
     protected int downloads;
     protected String author;
-    @SerializedName("is_exclusive")
+    @JsonProperty("is_exclusive")
     protected boolean exclusive;
-    @SerializedName("maxis_category")
+    @JsonProperty("maxis_category")
     protected String broadCategory;
     protected String description;
     protected HashMap<String,String> images;
     protected String link;
-    @SerializedName("is_certified")
+    @JsonProperty("is_certified")
     protected boolean certified;
-    @SerializedName("is_active")
+    @JsonProperty("is_active")
     protected boolean active;
-    @SerializedName("upload_date")
+    @JsonProperty("upload_date")
     protected Date uploaded;
-    @SerializedName("update_date")
+    @JsonProperty("update_date")
     protected Date updated;
     protected String filesize;
-    @SerializedName("dependencies")
+    @JsonProperty("dependencies")
     protected DependencyList dependencyList;
+    protected List<Comment> comments;
+    @JsonProperty("last_downloaded")
+    protected Date lastDownloaded;
+    protected Map<Integer, Integer> votes;
 
     /**
      * Returns the ID of this file
@@ -187,6 +193,18 @@ public class Lot {
      */
     public DependencyList getDependencyList() {
         return dependencyList;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public Date getLastDownloaded() {
+        return lastDownloaded;
+    }
+
+    public Map<Integer, Integer> getVotes() {
+        return votes;
     }
 
     /**

@@ -1,6 +1,6 @@
 package net.caspervg.lex4j.bean;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -9,19 +9,19 @@ import java.util.List;
  */
 public class CategoryOverview {
 
-    @SerializedName("broad_category")
+    @JsonProperty("broad_category")
     protected List<BroadCategory> broadCategories;
 
-    @SerializedName("lex_category")
+    @JsonProperty("lex_category")
     protected List<Category> lexCategories;
 
-    @SerializedName("lex_type")
+    @JsonProperty("lex_type")
     protected List<TypeCategory> lexTypeCategories;
 
-    @SerializedName("group")
-    protected List<Category> lotGroups;
+    @JsonProperty("group")
+    protected List<GroupCategory> lotGroups;
 
-    @SerializedName("author")
+    @JsonProperty("author")
     protected List<Category> lotAuthors;
 
     /**
@@ -56,7 +56,7 @@ public class CategoryOverview {
      *
      * @return the lot groups
      */
-    public List<Category> getLotGroups() {
+    public List<GroupCategory> getLotGroups() {
         return lotGroups;
     }
 

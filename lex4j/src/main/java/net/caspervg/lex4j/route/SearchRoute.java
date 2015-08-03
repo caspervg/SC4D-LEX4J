@@ -1,17 +1,14 @@
 package net.caspervg.lex4j.route;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.Lot;
 import net.caspervg.lex4j.log.LEX4JLogger;
-import net.caspervg.lex4j.reflection.ParameterizedList;
-import net.caspervg.lex4j.serializer.LEXDateSerializer;
-import org.restlet.data.Reference;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,13 +21,19 @@ import java.util.logging.Level;
  */
 public class SearchRoute {
 
+    private Auth auth;
     private Map<String, Object> parameters;
 
     /**
      * Constructs a new SearchRoute. This does not require authentication.
      */
     public SearchRoute() {
-        this.parameters = new HashMap<String, Object>();
+        this(null);
+    }
+
+    public SearchRoute(Auth auth) {
+        this.auth = auth;
+        this.parameters = new HashMap<>();
     }
 
     /**
@@ -67,37 +70,30 @@ public class SearchRoute {
 
     /**
      * Performs the search operation based on filters that are currently active.
-     *
-     * Keep in mind that this method does not return all information about the resulting lots. For some detailed
-     * information, you may have to separately call {@link LotRoute#getLot} or {@link LotRoute#getDependencyList}.
+     * Retrieves only publicly available data (no user-dependent information such as the last download date)
      *
      * @return the lots/files that were returned by the search operation
+     * @see ExtraLotInfo
      */
     public List<Lot> doSearch() {
-        return doSearch(Lot.class);
+        return doSearch(new ExtraLotInfo.PublicExtraInfo());
     }
 
     /**
      * Performs the search operation based on filters that are currently active.
      *
-     * Keep in mind that this method does not return all information about the resulting lots. For some detailed
-     * information, you may have to separately call {@link LotRoute#getLot} or {@link LotRoute#getDependencyList}.
-     *
-     * @param clazz Class to return
-     * @param <T> Type to return
+     * @param extras Which extra lot information should be included in each search result
      * @return the lots/files that were returned by the search operation
+     * @see ExtraLotInfo
      */
-    public <T extends Lot> List<T> doSearch(Class<T> clazz) {
+    public List<Lot> doSearch(ExtraLotInfo extras) {
         ClientResource resource = new ClientResource(Route.SEARCH.url());
-        Reference reference = resource.getReference();
-
-        Route.addParameters(reference, this.parameters);
-
-        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new LEXDateSerializer()).create();
+        Route.handleExtraInfo(resource, extras, auth);
+        Route.addParameters(resource.getReference(), this.parameters);
 
         try {
             Representation repr = resource.get();
-            return gson.fromJson(repr.getText(), new ParameterizedList<T>(clazz));
+            return new ObjectMapper().readValue(repr.getText(), new TypeReference<List<Lot>>() {});
         } catch (IOException ex) {
             LEX4JLogger.log(Level.WARNING, "Could not retrieve search results correctly!");
             return null;

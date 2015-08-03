@@ -1,6 +1,6 @@
 package net.caspervg.lex4j.bean;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
@@ -38,11 +38,11 @@ public class DownloadHistoryItem {
     public class DownloadHistoryItemRecord {
 
         protected int id;
-        @SerializedName("last_downloaded")
+        @JsonProperty("last_downloaded")
         protected Date lastDownloaded;
-        @SerializedName("last_version")
+        @JsonProperty("last_version")
         protected String lastVersion;
-        @SerializedName("download_count")
+        @JsonProperty("download_count")
         protected int timesDownloaded;
 
         /**
@@ -101,7 +101,7 @@ public class DownloadHistoryItem {
 
         protected int id;
         protected String name;
-        @SerializedName("update_date")
+        @JsonProperty("update_date")
         protected Date updated;
         protected String version;
         protected String author;

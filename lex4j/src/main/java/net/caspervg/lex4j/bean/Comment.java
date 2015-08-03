@@ -1,6 +1,7 @@
 package net.caspervg.lex4j.bean;
 
-import com.google.gson.annotations.SerializedName;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
@@ -13,9 +14,9 @@ public class Comment {
     protected String user;
     protected String text;
     protected Date date;
-    @SerializedName("by_author")
+    @JsonProperty("by_author")
     protected boolean byAuthor;
-    @SerializedName("by_admin")
+    @JsonProperty("by_admin")
     protected boolean byAdmin;
 
     /**

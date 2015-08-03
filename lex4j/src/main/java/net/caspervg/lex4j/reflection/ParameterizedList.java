@@ -27,5 +27,4 @@ public final class ParameterizedList<X> implements ParameterizedType {
     public Type getOwnerType() {
         return null;
     }
-
 }

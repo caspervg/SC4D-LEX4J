@@ -1,6 +1,6 @@
 package net.caspervg.lex4j.bean;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
@@ -68,7 +68,7 @@ public class DownloadListItem {
 
         protected int id;
         protected String name;
-        @SerializedName("update_date")
+        @JsonProperty("update_date")
         protected Date updated;
         protected String version;
         protected String author;

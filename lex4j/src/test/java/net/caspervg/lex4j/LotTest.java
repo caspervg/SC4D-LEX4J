@@ -34,7 +34,8 @@ public class LotTest {
 
     @Test
     public void lotTest() {
-        LotRoute route = new LotRoute();
+        Auth auth = new Auth(prop.getProperty("username"),prop.getProperty("password"));
+        LotRoute route = new LotRoute(auth);
         try {
             Lot lot = route.getLot(950);
             Assert.assertEquals(lot.getName(), "CAM Commercial Offices BSC");
@@ -46,14 +47,15 @@ public class LotTest {
             System.out.println(stat.getDescription());
             System.out.println(stat.getUri());
             System.out.println(stat.getCode());
-            System.out.println(stat.getName());
+            System.out.println(stat.getReasonPhrase());
             System.out.println(stat.isClientError());
         }
     }
 
     @Test
     public void lotDependencyNullTest() {
-        LotRoute route = new LotRoute();
+        Auth auth = new Auth(prop.getProperty("username"),prop.getProperty("password"));
+        LotRoute route = new LotRoute(auth);
         try {
             Lot lot = route.getLot(2987);
             Assert.assertNotNull(lot.getDependencyList());

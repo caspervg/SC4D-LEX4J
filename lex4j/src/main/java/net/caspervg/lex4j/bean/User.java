@@ -1,6 +1,6 @@
 package net.caspervg.lex4j.bean;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
@@ -13,42 +13,35 @@ public class User {
     protected String fullname;
     protected String username;
     protected Date registered;
+
+    @JsonProperty("last_login")
     protected Date lastLogin;
 
-    @SerializedName("user_level")
+    @JsonProperty("user_level")
     protected int userLevel;
 
     protected String email;
-    @SerializedName("login_count")
+    @JsonProperty("login_count")
 
     protected int loginCount;
 
-    @SerializedName("is_active")
+    @JsonProperty("is_active")
     protected boolean active;
 
-    @SerializedName("is_donator")
+    @JsonProperty("is_donator")
     protected boolean donator;
 
-    @SerializedName("is_rater")
+    @JsonProperty("is_rater")
     protected boolean rater;
 
-    @SerializedName("is_uploader")
+    @JsonProperty("is_uploader")
     protected boolean uploader;
 
-    @SerializedName("is_author")
+    @JsonProperty("is_author")
     protected boolean author;
 
-    @SerializedName("is_admin")
+    @JsonProperty("is_admin")
     protected boolean admin;
-
-    public User() {
-        /*
-         * Hacky solution to avoid having to write separate Date parsing rules for User.lastLogin, which uses yyyyMMddHHmmss
-         * compared to the rest of the LEX API, which uses yyyyMMdd. We could parse, but there would be timezone issues.
-         * Since the LEX API handles Basic Auth as a "log in", the lastLogin would always equal the current time anyhow.
-         */
-        this.lastLogin = new Date();
-    }
 
     /**
      * Returns the ID of this user

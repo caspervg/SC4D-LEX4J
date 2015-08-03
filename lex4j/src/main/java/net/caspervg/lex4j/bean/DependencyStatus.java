@@ -1,6 +1,6 @@
 package net.caspervg.lex4j.bean;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * This class provides the status of a certain dependency
@@ -9,9 +9,9 @@ public class DependencyStatus {
 
     protected boolean ok;
     protected boolean deleted;
-    @SerializedName("superceded")
+    @JsonProperty("superseded")
     protected boolean superseded;
-    @SerializedName("superceded_by")
+    @JsonProperty("superseded_by")
     protected int supersededBy;
     protected boolean locked;
 

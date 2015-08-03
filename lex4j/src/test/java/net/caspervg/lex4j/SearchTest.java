@@ -87,27 +87,4 @@ public class SearchTest {
         Assert.assertNotNull(depLot.getDependencyList().getList().get(0).getStatus());
     }
 
-    @Test
-    public void searchConciseDependencyTest() {
-        SearchRoute route = new SearchRoute();
-        route.addFilter(Filter.CREATOR, 1);
-        route.addFilter(Filter.DEPENDENCIES, "concise");
-        List<Lot> lots = route.doSearch();
-
-        Assert.assertEquals("ok", lots.get(0).getDependencyList().getStatus());
-
-        Lot depLot = null;
-        for (Lot l : lots) {
-            if (l.getDependencyList().getCount() > 0) {
-                depLot = l;
-            }
-        }
-
-        Assert.assertNotNull(depLot);
-        Assert.assertEquals(1, depLot.getDependencyList().getCount());
-        Assert.assertEquals(731, depLot.getDependencyList().getList().get(0).getId());
-        Assert.assertEquals("N/A", depLot.getDependencyList().getList().get(0).getName());
-        Assert.assertNull(depLot.getDependencyList().getList().get(0).getStatus());
-    }
-
 }

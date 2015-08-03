@@ -76,7 +76,7 @@ public class UserTest {
         UserRoute route = new UserRoute(auth);
         try {
             List<DownloadListItem> dlList = route.getDownloadList();
-            Assert.assertEquals(dlList.get(0).getLot().getId(), 670);
+            Assert.assertTrue(dlList.size() > 0);
         } catch (ResourceException ex) {
             System.out.println(ex.getStatus());
         }

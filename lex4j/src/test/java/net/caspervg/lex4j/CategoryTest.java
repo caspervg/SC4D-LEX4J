@@ -1,9 +1,6 @@
 package net.caspervg.lex4j;
 
-import net.caspervg.lex4j.bean.BroadCategory;
-import net.caspervg.lex4j.bean.Category;
-import net.caspervg.lex4j.bean.CategoryOverview;
-import net.caspervg.lex4j.bean.TypeCategory;
+import net.caspervg.lex4j.bean.*;
 import net.caspervg.lex4j.route.CategoryRoute;
 import org.junit.Assert;
 import org.junit.Test;
@@ -74,14 +71,15 @@ public class CategoryTest {
     @Test
     public void testLotGroups() {
         CategoryRoute route = new CategoryRoute();
-        List<Category> list = route.getLotGroups();
+        List<GroupCategory> list = route.getLotGroups();
 
         Assert.assertNotNull(list);
 
-        Category first = list.get(0);
+        GroupCategory first = list.get(0);
 
         Assert.assertEquals(4, first.getId());
         Assert.assertEquals("BSC - VIP girafe flora", first.getName());
+        Assert.assertEquals("girafe", first.getAuthor());
     }
 
     @Test

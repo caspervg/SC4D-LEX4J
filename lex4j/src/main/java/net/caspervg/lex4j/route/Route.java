@@ -1,6 +1,8 @@
 package net.caspervg.lex4j.route;
 
+import net.caspervg.lex4j.auth.Auth;
 import org.restlet.data.Reference;
+import org.restlet.resource.ClientResource;
 
 import java.util.Map;
 
@@ -40,7 +42,7 @@ public enum Route {
     ALL_CATEGORY("/category/all");
 
     private static final String base = "http://sc4devotion.com/csxlex/api/";
-    private static final String version = "v3";
+    private static final String version = "v4";
     private String url;
 
     /**
@@ -82,12 +84,37 @@ public enum Route {
      * @param ref reference to use for the generation
      * @param param parameters and their values to add to the request
      */
-    protected static void addParameters(Reference ref, Map<String,Object> param) {
+    static void addParameters(Reference ref, Map<String,Object> param) {
         for (String key : param.keySet()) {
             Object value = param.get(key);
             if (value != null) {
                 ref.addQueryParameter(key, String.valueOf(value));
             }
+        }
+    }
+
+    static void handleExtraInfo(ClientResource res, ExtraLotInfo extra, Auth auth) {
+        Reference ref = res.getReference();
+
+        if (extra.withComments()) {
+            ref.addQueryParameter("comments", "true");
+        }
+
+        if (extra.withDependencies()) {
+            ref.addQueryParameter("dependencies", "true");
+        }
+
+        if (extra.withVotes()) {
+            ref.addQueryParameter("votes", "true");
+        }
+
+        if (extra.withUser()) {
+            if (auth == null) {
+                throw new IllegalStateException("To be able to retrieve user-related information (e.g. last_downloaded), " +
+                        "you need to supply an Auth object to the route");
+            }
+            ref.addQueryParameter("user", "true");
+            res.setChallengeResponse(auth.toChallenge());
         }
     }
 }
