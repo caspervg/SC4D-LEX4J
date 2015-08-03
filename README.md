@@ -1,7 +1,7 @@
 SC4Devotion-LEX4J
 ======================
 
-This Java library provides methods and beans to communicate with the SC4Devotion Lot Exchange API. 
+This Java library provides methods and beans to communicate with the SC4Devotion Lot Exchange API. It is currently compatible with the v4 version of the LEX API, provided you use a version higher than v4.0.0.
 
 ### Installation
 Installation is easy using the Maven Central Repository. Just add the following snippet to your ```pom.xml```
@@ -11,20 +11,7 @@ Installation is easy using the Maven Central Repository. Just add the following 
   <dependency>
       <groupId>net.caspervg.lex4j</groupId>
       <artifactId>LEX4J</artifactId>
-      <version>2.0</version>
-  </dependency>
-  ...
-</dependencies>
-```
-
-Alternatively, you can use the latest in-development version:
-```xml
-<dependencies>
-  ...
-  <dependency>
-      <groupId>net.caspervg.lex4j</groupId>
-      <artifactId>LEX4J</artifactId>
-      <version>2.0-SNAPSHOT</version>
+      <version>4.0.0</version>
   </dependency>
   ...
 </dependencies>
@@ -61,6 +48,11 @@ If you run the tests, make sure to rename auth_example.properties to auth.proper
 
 ##### v1.1
 * Made fields in all beans ```protected``` instead of ```private``` so that overriding classes can edit them easily, as there are no setters.
+
+##### v4.0.0
+* Undo generic method support. Seldom used, rarely useful.
+* Use Jackson instead of GSON for (de)serialization. GSON didn't natively support the API v4 datetime format (ISO 8601).
+* Add support for LEX API v4 and the "extra info" parameters for dependencies, comments, votes and users
 
 ### Documentation
 Documentation (Javadoc) is available at http://caspervg.net/public/sc4d-lex4j
