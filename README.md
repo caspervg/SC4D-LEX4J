@@ -11,7 +11,7 @@ Installation is easy using the Maven Central Repository. Just add the following 
   <dependency>
       <groupId>net.caspervg.lex4j</groupId>
       <artifactId>LEX4J</artifactId>
-      <version>4.0.0</version>
+      <version>4.1.0</version>
   </dependency>
   ...
 </dependencies>
@@ -54,11 +54,11 @@ If you run the tests, make sure to rename auth_example.properties to auth.proper
 * Use Jackson instead of GSON for (de)serialization. GSON didn't natively support the API v4 datetime format (ISO 8601).
 * Add support for LEX API v4 and the "extra info" parameters for dependencies, comments, votes and users
 
+##### v4.1.0
+* Add support for recursive dependencies. Allows flatting them as well using the new DependencyList#asSet() and #asList() methods
+
 ### Documentation
 Documentation (Javadoc) is available at http://caspervg.net/public/sc4d-lex4j
 
 ### Contribute
-Feel free to contribute your ideas and improvements, either through pull requests or issues
-
-### Contact
-Contact me (username: CasperVg) either at sc4devotion.com. 
+Feel free to contribute ideas, suggestions and code.
