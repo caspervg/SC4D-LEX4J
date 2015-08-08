@@ -2,6 +2,7 @@ package net.caspervg.lex4j;
 
 import net.caspervg.lex4j.auth.Auth;
 import net.caspervg.lex4j.bean.Comment;
+import net.caspervg.lex4j.bean.Dependency;
 import net.caspervg.lex4j.bean.DependencyList;
 import net.caspervg.lex4j.bean.Lot;
 import net.caspervg.lex4j.route.LotRoute;
@@ -17,6 +18,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+
+import static junit.framework.Assert.fail;
 
 public class LotTest {
 
@@ -63,6 +67,7 @@ public class LotTest {
             Assert.assertNotEquals(0, lot.getDependencyList().getCount());
             Assert.assertNotEquals(0, lot.getDependencyList().getList().size());
         } catch (ResourceException ex) {
+            fail();
             System.err.println(ex);
         }
     }
@@ -97,8 +102,26 @@ public class LotTest {
         try {
             DependencyList list = route.getDependency(950);
             Assert.assertEquals(76, list.getCount());
+
+            // Test includes recursive dependencies
+            Assert.assertEquals(2, list.getList().get(15).getDependencies().getCount());
         } catch (ResourceException ex) {
             System.out.println(ex.getStatus());
+            fail();
+        }
+    }
+
+    @Test
+    public void lotDependencyListTest() {
+        LotRoute route = new LotRoute();
+        try {
+            DependencyList list = route.getDependencyList(950);
+            Set<Dependency> dependencySet = list.asSet();
+            Assert.assertEquals(76, list.getCount());
+            Assert.assertEquals(81, dependencySet.size());
+        } catch (ResourceException ex) {
+            System.out.println(ex.getStatus());
+            fail();
         }
     }
 
