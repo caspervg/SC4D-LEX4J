@@ -9,7 +9,7 @@
     <version>4.1.0</version>
 
     <name>SC4Devotion LEX4J</name>
-    <description>A library that be used to send requests to the SC4Devotion Lot Exchange API</description>
+    <description>A Java library that be used to send requests to the SC4Devotion Lot Exchange API</description>
     <url>http://caspervg.net/public/sc4d-lex4j/</url>
 
     <licenses>
@@ -88,6 +88,48 @@
                            <target>${jdk.level}</target>
                        </configuration>
                     </plugin>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.7.4.201502262128</version>
+                        <executions>
+                          <execution>
+                              <id>pre-unit-test</id>
+                              <goals>
+                                  <goal>prepare-agent</goal>
+                              </goals>
+                                <configuration>
+                                    <propertyName>surefireArgLine</propertyName>
+                                </configuration>
+                          </execution>
+                          <execution>
+                              <id>post-unit-test</id>
+                              <phase>test</phase>
+                              <goals>
+                                  <goal>report</goal>
+                              </goals>
+                          </execution>
+                      </executions>
+                    </plugin>
+                    <plugin>
+                     <artifactId>maven-surefire-plugin</artifactId>
+                     <version>2.14</version>
+                     <executions>
+                       <execution>
+                         <id>default-test</id>
+                         <phase>test</phase>
+                         <goals>
+                           <goal>test</goal>
+                         </goals>
+                         <configuration>
+                           <argLine>${surefireArgLine}</argLine>
+                         </configuration>
+                       </execution>
+                     </executions>
+                     <configuration>
+                       <argLine>-XX:MaxPermSize=512m</argLine>
+                     </configuration>
+                  </plugin>
                 </plugins>
             </build>
         </profile>
